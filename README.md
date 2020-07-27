@@ -6,7 +6,7 @@
 
 ## Installer PowerPala sur le Paladium Launcher
 
-D'abord vous devez installer NodeJS si se n'est pas déjà fait: https://nodejs.org/en/
+D'abord vous devez installer NodeJS si ce n'est pas déjà fait: https://nodejs.org/en/
 
 Puis une fois installé [clonez](git://github.com/pharuxtan/powerpala.git) ou téléchargez le [master.zip](https://github.com/pharuxtan/powerpala/archive/master.zip) du git
 
@@ -14,7 +14,7 @@ Après ouvrez votre launcher, faites `Ctrl+Maj+I` sur Windows/Linux ou `⌘+Alt+
 
 Puis déplacez le dossier `powerpala` ou `powerpala-master` (extrait du zip) dans le dossier ouvert et renommez le `app`
 
-Ouvrez une invite de commande de le dossier puis faites `npm install`
+Ouvrez une invite de commande dans le dossier puis faites `npm install`
 
 Puis (re)démarrez votre launcher
 
