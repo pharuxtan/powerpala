@@ -19,3 +19,5 @@ Ouvrez une invite de commande dans le dossier puis faites `npm install`
 Puis (re)démarrez votre launcher
 
 ET VOILA ! PowerPala est installé
+
+Vidéo YT: https://youtu.be/9EK_ZAV9yiQ
