@@ -11,40 +11,40 @@ module.exports = class EventsAPI extends API {
       this[key] = value;
     });
 
-    initLauncher = this._callFunc("onInitLauncher", initLauncher);
+    initLauncher = this._callFunc("initLauncher", initLauncher);
 
-    closeLauncher = this._callFunc("onCloseLauncher", closeLauncher);
+    closeLauncher = this._callFunc("closeLauncher", closeLauncher);
 
-    onDistroLoad = this._callFunc("onDistroLoad", onDistroLoad);
+    onDistroLoad = this._callFunc("distroLoad", onDistroLoad);
 
-    onAutoUpdateFinish = this._callFunc("onAutoUpdateFinish", onAutoUpdateFinish);
+    onAutoUpdateFinish = this._callFunc("autoUpdateFinish", onAutoUpdateFinish);
 
-    downloadJava = this._callFunc("onDownloadJava", downloadJava);
+    downloadJava = this._callFunc("downloadJava", downloadJava);
 
-    onValidateJava = this._callFunc("onValidateJava", onValidateJava);
+    onValidateJava = this._callFunc("validateJava", onValidateJava);
 
-    setLoadingStatut = this._callFunc("onSetLoadingStatut", setLoadingStatut);
+    setLoadingStatut = this._callFunc("setLoadingStatut", setLoadingStatut);
 
-    onLogin = this._callFunc("onLogin", onLogin);
+    onLogin = this._callFunc("login", onLogin);
 
-    refreshServer = this._callFunc("onRefreshServer", refreshServer);
+    refreshServer = this._callFunc("refreshServer", refreshServer);
 
-    refreshLauncherUserCompte = this._callFunc("onRefreshLauncherUserCompte", refreshLauncherUserCompte);
+    refreshLauncherUserCompte = this._callFunc("refreshLauncherUserCompte", refreshLauncherUserCompte);
 
-    gameUpdate = this._callFunc("onLaunching", gameUpdate);
+    gameUpdate = this._callFunc("launching", gameUpdate);
 
-    initSettings = this._callFunc("onInitSettings", initSettings);
+    initSettings = this._callFunc("initSettings", initSettings);
 
-    initSettingsJavaExecutableTab = this._callFunc("onInitSettingsJavaExecutableTab", initSettingsJavaExecutableTab);
+    initSettingsJavaExecutableTab = this._callFunc("initSettingsJavaExecutableTab", initSettingsJavaExecutableTab);
 
-    initSettingsJavaMemoryTab = this._callFunc("onInitSettingsJavaMemoryTab", initSettingsJavaMemoryTab);
+    initSettingsJavaMemoryTab = this._callFunc("initSettingsJavaMemoryTab", initSettingsJavaMemoryTab);
 
-    initSettingsUserCompteTab = this._callFunc("onInitSettingsUserCompteTab", initSettingsUserCompteTab);
+    initSettingsUserCompteTab = this._callFunc("initSettingsUserCompteTab", initSettingsUserCompteTab);
 
-    initLauncherHomePanel = () => {
+    initLauncherHomePanel = this._callFunc("initLauncherHomePanel", () => {
       refreshServer();
       refreshLauncherUserCompte();
-    }
+    });
 
     let playButton = document.querySelector("#launcher-home-play-button");
 
@@ -53,6 +53,26 @@ module.exports = class EventsAPI extends API {
     events.click[0].handler = () => {
       gameUpdate();
     }
+    
+    //Overlay
+    
+    setOverlayContent = this._callFunc("setOverlayContent", setOverlayContent);
+
+    toggleOverlay = this._callFunc("toggleOverlay", toggleOverlay);
+
+    setActionHandler = this._callFunc("setActionHandler", setActionHandler);
+
+    setCloseHandler = this._callFunc("setCloseHandler", setCloseHandler);
+
+    setGameUpdateOverlayContent = this._callFunc("setGameUpdateOverlayContent", setGameUpdateOverlayContent);
+
+    toggleGameUpdateOverlay = this._callFunc("toggleGameUpdateOverlay", toggleGameUpdateOverlay);
+
+    setGameUpdateOverlayTitle = this._callFunc("setGameUpdateOverlayTitle", setGameUpdateOverlayTitle);
+
+    setGameUpdateOverlayDownload = this._callFunc("setGameUpdateOverlayDownload", setGameUpdateOverlayDownload);
+
+    setGameUpdateOverlayDownloadProgress = this._callFunc("setGameUpdateOverlayDownloadProgress", setGameUpdateOverlayDownloadProgress);
   }
 
   _callFunc(emit, callback){
