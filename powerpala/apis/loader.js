@@ -72,7 +72,7 @@ module.exports = class LoaderAPI extends API {
     }
     showLoading.bind(this);
 
-    showLoading = powerpala.api.events._callFunc("onShowLoading", showLoading);
+    showLoading = powerpala.api.events._callFunc("showLoading", showLoading);
   }
 
   addSplash(text, author, matrix){
