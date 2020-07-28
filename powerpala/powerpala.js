@@ -27,8 +27,6 @@ module.exports = class Powerpala {
     // Start
     await this._startup();
 
-    await this._settings();
-
     if(process.platform === "darwin") await this._fixMacOSErrors();
   }
 
@@ -40,6 +38,8 @@ module.exports = class Powerpala {
     await this.apiManager.startAPIs();
 
     await this.loadCustomSplashes();
+
+    await this._settings();
 
     // Themes
     this.styleManager.loadThemes();
