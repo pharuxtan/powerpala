@@ -26,7 +26,6 @@ module.exports = class SettingsAPI extends API {
     let powerpalapanel = document.createElement("div");
     powerpalapanel.className = "settings-container";
     powerpalapanel.id = "powerpala-panel";
-    powerpalapanel.style.display = "none";
 
     document.getElementsByClassName("settings-panel-right")[0].appendChild(powerpalapanel);
   }
@@ -60,10 +59,16 @@ module.exports = class SettingsAPI extends API {
     for(let element of panels) element.style.display = "none";
     button.classList.add("selected");
     button.setAttribute("disabled", "");
-    currentSettingsPanel = "#powerpala-panel";
-    let panel = document.querySelector(currentSettingsPanel);
+    let panel = document.querySelector("#powerpala-panel");
     panel.innerHTML = element.innerHTML;
-    $(panel).fadeIn(250);
+    panel.style.opacity = 0;
+    panel.style.display = "block";
+    let ms = 0, interval;
+    interval = setInterval(() => {
+      ms += 25;
+      panel.style.opacity = ms/250;
+      if(ms >= 250) clearInterval(interval);
+    }, 25);
   }
 
   async createCheckbox(settingsFlexContainer, id, titletext, description, checked, onCheck, onUncheck){

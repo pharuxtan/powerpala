@@ -23,7 +23,7 @@ module.exports = class DarwinFrame extends Plugin {
   }
 
   async stopPlugin(){
-    this.log("Se plugin necessite un redémarrage pour être stoppé")
+    this.log("Ce plugin necessite un redémarrage pour être stoppé")
   }
 };
 

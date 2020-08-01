@@ -68,7 +68,15 @@ module.exports = class LoaderAPI extends API {
           el.style.backgroundColor = (!color.startsWith("#") ? "#" : "") + color;
         }
       });
-      $('#loading-view').fadeIn(500);
+      let loadingView = document.querySelector("#loading-view");
+      loadingView.setAttribute("style", "");
+      loadingView.style.opacity = 0;
+      let ms = 0, interval;
+      interval = setInterval(() => {
+        ms += 25;
+        loadingView.style.opacity = ms/500;
+        if(ms >= 500) clearInterval(interval);
+      }, 25);
     }
     showLoading.bind(this);
 
