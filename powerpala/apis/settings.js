@@ -26,6 +26,7 @@ module.exports = class SettingsAPI extends API {
     let powerpalapanel = document.createElement("div");
     powerpalapanel.className = "settings-container";
     powerpalapanel.id = "powerpala-panel";
+    powerpalapanel.style.display = "none";
 
     document.getElementsByClassName("settings-panel-right")[0].appendChild(powerpalapanel);
   }
