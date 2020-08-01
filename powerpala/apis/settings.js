@@ -60,6 +60,7 @@ module.exports = class SettingsAPI extends API {
     for(let element of panels) element.style.display = "none";
     button.classList.add("selected");
     button.setAttribute("disabled", "");
+    currentSettingsPanel = "#powerpala-panel";
     let panel = document.querySelector("#powerpala-panel");
     panel.innerHTML = element.innerHTML;
     panel.style.opacity = 0;
