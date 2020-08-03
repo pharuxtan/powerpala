@@ -109,6 +109,7 @@ module.exports = class Powerpala {
       powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-transparent", "Activer la transparence", "Permet de rendre la fenêtre transparente (peut être utile pour les thèmes, nécessite un redémarrage du launcher)", powerpala.settings.get("transparent", false), () => powerpala.settings.set("transparent", true), () => powerpala.settings.set("transparent", false));
       powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-isdev", "Activer le mode développeur","Permet de:<br> - Désactiver les mises à jour automatique<br> - Avoir les arguments java dans les logs lors du démarrage du jeu<br> - Redémarrer le Paladium Launcher avec " + (process.platform == "darwin" ? "⌘+Shift+R" : "Ctrl+Shift+R"), powerpala.settings.get("isdev", false), () => powerpala.settings.set("isdev", true), () => powerpala.settings.set("isdev", false));
       if(process.platform != "darwin") powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-multiinstance", "Activer le multi-instance", "Permet de lancer plusieurs instances du Paladium Launcher", powerpala.settings.get("multiinstance", false), () => powerpala.settings.set("multiinstance", true), () => powerpala.settings.set("multiinstance", false));
+      powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-distributionenable", "Activer les distribution personnalisé" ,"Fonctionnalité experimental qui permet de changer la distribution du launcheur (à utiliser que si vous savez se que vous faites)", powerpala.settings.get("isDistributionEnable", false), () => {powerpala.settings.set("isDistributionEnable", true); addDistributionButton()}, () => {powerpala.settings.set("isDistributionEnable", false); if(powerpala.settings.get("distribution", null)) { DistroManager.pullRemote("http://download.paladium-pvp.fr/launcher/beta-version/distribution.json") } powerpala.settings.set("distribution", null); powerpala.api.settings.deleteButton("powercord-distribution")});
 
       powerpala.api.settings.updatePanel(button, panel);
     });
@@ -142,6 +143,39 @@ module.exports = class Powerpala {
 
       powerpala.api.settings.updatePanel(button, panel);
     });
+
+    if(powerpala.settings.get("isDistributionEnable", false)) addDistributionButton();
+
+    function addDistributionButton(){
+      powerpala.api.settings.addButton("powercord-distribution", "Distribution", async (button) => {
+        let panel = document.createElement("div");
+
+        panel.innerHTML = `<h1 id="title">Distribution</h1> <div class="info-container"> <p class="title">Information</p><p class="desc">Cette page permet de configurer le système de distribution du launcher.</p></div><div class="warning-banner-settings" style="margin-bottom: 20px;"><i class="fas fa-exclamation-triangle"></i> Modifier les valeurs ici sans savoir ce que l'on fait peu faire planter le launcher.</div><div class="settings-flex-container"> <p class="group-name">Url</p><p class="group-name mb-5">(laisser vide pour avoir la valeur par défaut)</p><input class="textfield" type="text" id="settings-launcher-distro-textfield"/> </div>`;
+
+        powerpala.api.settings.updatePanel(button, panel);
+
+        let textfield = document.querySelector("#settings-launcher-distro-textfield");
+
+        if(powerpala.settings.get("distribution", null) != null) textfield.value = powerpala.settings.get("distribution", null);
+
+        let REGEX_URL = /(?:(?:(?:[a-z]+:)?\/\/)|www\.)(?:\S+(?::\S*)?@)?(?:localhost|(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?:[a-z\u00a1-\uffff0-9-_]+\.)+(?:(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#][^\s"]*)?\.json/gi;
+
+        textfield.oninput = () => {
+          if(textfield.value.match(REGEX_URL)){
+            DistroManager.pullRemote(textfield.value);
+            powerpala.settings.set("distribution", textfield.value);
+          } else if(textfield.value == ""){
+            DistroManager.pullRemote("http://download.paladium-pvp.fr/launcher/beta-version/distribution.json");
+            powerpala.settings.set("distribution", null);
+          }
+        }
+      });
+
+      powerpala.api.events.on("distroLoad", () => {
+        if(!powerpala.settings.get("isDistributionEnable", false)) return;
+        if(powerpala.settings.get("distribution", null)) DistroManager.pullRemote(powerpala.settings.get("distribution", null));
+      });
+    }
   }
 
   async _fixMacOSErrors(){
