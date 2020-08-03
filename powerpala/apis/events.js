@@ -46,16 +46,8 @@ module.exports = class EventsAPI extends API {
       refreshLauncherUserCompte();
     });
 
-    let playButton = document.querySelector("#launcher-home-play-button");
-
-    let events = playButton[Object.keys(playButton).filter(k => k.startsWith("jQuery"))[0]].events;
-
-    events.click[0].handler = () => {
-      gameUpdate();
-    }
-    
     //Overlay
-    
+
     setOverlayContent = this._callFunc("setOverlayContent", setOverlayContent);
 
     toggleOverlay = this._callFunc("toggleOverlay", toggleOverlay);
