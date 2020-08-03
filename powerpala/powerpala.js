@@ -93,6 +93,10 @@ module.exports = class Powerpala {
   }
 
   async _settings(){
+    let distributionFunction = () => {
+      if(powerpala.settings.get("distribution", null)) DistroManager.pullRemote(powerpala.settings.get("distribution", null));
+    };
+
     powerpala.api.settings.addButton("powercord-general", "Général", async (button) => {
       let panel = document.createElement("div");
 
@@ -109,7 +113,7 @@ module.exports = class Powerpala {
       powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-transparent", "Activer la transparence", "Permet de rendre la fenêtre transparente (peut être utile pour les thèmes, nécessite un redémarrage du launcher)", powerpala.settings.get("transparent", false), () => powerpala.settings.set("transparent", true), () => powerpala.settings.set("transparent", false));
       powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-isdev", "Activer le mode développeur","Permet de:<br> - Désactiver les mises à jour automatique<br> - Avoir les arguments java dans les logs lors du démarrage du jeu<br> - Redémarrer le Paladium Launcher avec " + (process.platform == "darwin" ? "⌘+Shift+R" : "Ctrl+Shift+R"), powerpala.settings.get("isdev", false), () => powerpala.settings.set("isdev", true), () => powerpala.settings.set("isdev", false));
       if(process.platform != "darwin") powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-multiinstance", "Activer le multi-instance", "Permet de lancer plusieurs instances du Paladium Launcher", powerpala.settings.get("multiinstance", false), () => powerpala.settings.set("multiinstance", true), () => powerpala.settings.set("multiinstance", false));
-      powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-distributionenable", "Activer les distribution personnalisé" ,"Fonctionnalité experimental qui permet de changer la distribution du launcheur (à utiliser que si vous savez se que vous faites)", powerpala.settings.get("isDistributionEnable", false), () => {powerpala.settings.set("isDistributionEnable", true); addDistributionButton()}, () => {powerpala.settings.set("isDistributionEnable", false); if(powerpala.settings.get("distribution", null)) { DistroManager.pullRemote("http://download.paladium-pvp.fr/launcher/beta-version/distribution.json") } powerpala.settings.set("distribution", null); powerpala.api.settings.deleteButton("powercord-distribution")});
+      powerpala.api.settings.createCheckbox(settingsFlexContainer, "powerpala-distributionenable", "Activer les distribution personnalisé" ,"Fonctionnalité experimental qui permet de changer la distribution du launcheur (à utiliser que si vous savez se que vous faites)", powerpala.settings.get("isDistributionEnable", false), () => {powerpala.settings.set("isDistributionEnable", true); addDistributionButton()}, () => {powerpala.settings.set("isDistributionEnable", false); if(powerpala.settings.get("distribution", null)) { DistroManager.pullRemote("http://download.paladium-pvp.fr/launcher/beta-version/distribution.json") } powerpala.settings.set("distribution", null); powerpala.api.settings.deleteButton("powercord-distribution"); powerpala.api.events.off("distroLoad", distributionFunction)});
 
       powerpala.api.settings.updatePanel(button, panel);
     });
@@ -171,10 +175,7 @@ module.exports = class Powerpala {
         }
       });
 
-      powerpala.api.events.on("distroLoad", () => {
-        if(!powerpala.settings.get("isDistributionEnable", false)) return;
-        if(powerpala.settings.get("distribution", null)) DistroManager.pullRemote(powerpala.settings.get("distribution", null));
-      });
+      powerpala.api.events.on("distroLoad", distributionFunction);
     }
   }
 
