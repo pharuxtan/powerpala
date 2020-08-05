@@ -8,7 +8,7 @@ module.exports = class MaintenanceBypass extends Plugin {
   async startPlugin(){
     this.func = (title, description, buttonClose = 'Fermer', buttonAction = null, timeLeft = null, timeLeftMessage = null, preventDefault) => {
       if(title != "Maintenance du launcher !" || buttonAction != null) return;
-      preventDefault(); //preventDefault
+      preventDefault();
       let timeout = (setTimeout(() => {}, 1))+3;
       setActionHandler(() => {
         DistroManager.getDistribution().maintenance.enabled = false;
