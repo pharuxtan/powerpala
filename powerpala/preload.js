@@ -3,13 +3,14 @@
   const { join } = require("path");
   const fs = require("fs");
   const paladiumPath = join(__dirname, "..", "..", "app.asar");
+  const { remote: { app: { getPath } } } = require("electron");
 
   Module.Module.globalPaths.push(join(__dirname, 'fake_node_modules'));
   Module.Module.globalPaths.push(join(paladiumPath, 'node_modules'));
 
   const Powerpala = require(join(__dirname, "powerpala"));
 
-  const config = (fs.existsSync(join(__dirname, "config.json"))) ? require(join(__dirname, "config.json")) : {};
+  const config = (fs.existsSync(join(getPath('userData'), "powerpala", "config.json"))) ? require(join(getPath('userData'), "powerpala", "config.json")) : {};
 
   if(config.isdev){
     require(join(paladiumPath, "app", "assets", "js", "isdev"));

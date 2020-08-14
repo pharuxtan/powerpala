@@ -4,6 +4,7 @@ const APIManager = require('./managers/apis');
 const PluginManager = require('./managers/plugins');
 const StyleManager = require('./managers/styles');
 const { execSync } = require('child_process');
+const { remote: { app: { getPath } } } = require('electron');
 
 module.exports = class Powerpala {
   constructor(){
@@ -221,8 +222,8 @@ class Settings {
   config = {};
 
   constructor(){
-    if(!fs.existsSync(join(__dirname, "config.json"))) fs.writeFileSync(join(__dirname, "config.json"), "{}", "utf8");
-    this.config = require(join(__dirname, "config.json"));
+    if(!fs.existsSync(join(getPath('userData'), "powerpala", "config.json"))) fs.writeFileSync(join(getPath('userData'), "powerpala", "config.json"), "{}", "utf8");
+    this.config = require(join(getPath('userData'), "powerpala", "config.json"));
   }
 
   get (key, defval) {
@@ -232,6 +233,6 @@ class Settings {
 
   set (key, value) {
     this.config[key] = value;
-    fs.writeFileSync(join(__dirname, "config.json"), JSON.stringify(this.config, null, 2), "utf8");
+    fs.writeFileSync(join(getPath('userData'), "powerpala", "config.json"), JSON.stringify(this.config, null, 2), "utf8");
   }
 }

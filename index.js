@@ -14,7 +14,9 @@ const url = require('url');
 
 const electronPath = require.resolve('electron');
 
-const config = (fs.existsSync(join(__dirname, "powerpala", "config.json"))) ? require(join(__dirname, "powerpala", "config.json")) : {};
+if(!fs.existsSync(join(electron.app.getPath('userData'), "powerpala"))) fs.mkdirSync(join(electron.app.getPath('userData'), "powerpala"));
+
+const config = (fs.existsSync(join(electron.app.getPath('userData'), "powerpala", "config.json"))) ? require(join(electron.app.getPath('userData'), "powerpala", "config.json")) : {};
 
 let opt = {};
 
