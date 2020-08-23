@@ -11,60 +11,68 @@ module.exports = class EventsAPI extends API {
       this[key] = value;
     });
 
-    initLauncher = this._callFunc("initLauncher", initLauncher);
+    /* events not in the file:
+     *
+     * on("showLoading") // (preventDefault)
+     * on("logout") // (event, preventDefault)
+     **/
 
-    closeLauncher = this._callFunc("closeLauncher", closeLauncher);
+    initLauncher = this._callFunc("initLauncher", initLauncher); // (preventDefault)
 
-    onDistroLoad = this._callFunc("distroLoad", onDistroLoad);
+    closeLauncher = this._callFunc("closeLauncher", closeLauncher); // (preventDefault)
 
-    onAutoUpdateFinish = this._callFunc("autoUpdateFinish", onAutoUpdateFinish);
+    onDistroLoad = this._callFunc("distroLoad", onDistroLoad); // (data, preventDefault)
 
-    downloadJava = this._callFunc("downloadJava", downloadJava);
+    onAutoUpdateFinish = this._callFunc("autoUpdateFinish", onAutoUpdateFinish); // (preventDefault)
 
-    onValidateJava = this._callFunc("validateJava", onValidateJava);
+    downloadJava = this._callFunc("downloadJava", downloadJava); // (preventDefault)
 
-    setLoadingStatut = this._callFunc("setLoadingStatut", setLoadingStatut);
+    onValidateJava = this._callFunc("validateJava", onValidateJava); // (preventDefault)
 
-    onLogin = this._callFunc("login", onLogin);
+    setLoadingStatut = this._callFunc("setLoadingStatut", setLoadingStatut); // (text, preventDefault)
 
-    refreshServer = this._callFunc("refreshServer", refreshServer);
+    onLogin = this._callFunc("login", onLogin); // (preventDefault)
 
-    refreshLauncherUserCompte = this._callFunc("refreshLauncherUserCompte", refreshLauncherUserCompte);
+    refreshServer = this._callFunc("refreshServer", refreshServer); // (preventDefault)
 
-    gameUpdate = this._callFunc("launching", gameUpdate);
+    refreshLauncherUserCompte = this._callFunc("refreshLauncherUserCompte", refreshLauncherUserCompte); // (preventDefault)
 
-    initSettings = this._callFunc("initSettings", initSettings);
+    gameUpdate = this._callFunc("gameUpdate", gameUpdate); // (preventDefault)
 
-    initSettingsJavaExecutableTab = this._callFunc("initSettingsJavaExecutableTab", initSettingsJavaExecutableTab);
+    gameBuilder = this._callFunc("gameBuild", gameBuilder); // (preventDefault)
 
-    initSettingsJavaMemoryTab = this._callFunc("initSettingsJavaMemoryTab", initSettingsJavaMemoryTab);
+    initSettings = this._callFunc("initSettings", initSettings); // (preventDefault)
 
-    initSettingsUserCompteTab = this._callFunc("initSettingsUserCompteTab", initSettingsUserCompteTab);
+    initSettingsJavaExecutableTab = this._callFunc("initSettingsJavaExecutableTab", initSettingsJavaExecutableTab); // (preventDefault)
 
-    initLauncherHomePanel = this._callFunc("initLauncherHomePanel", () => {
+    initSettingsJavaMemoryTab = this._callFunc("initSettingsJavaMemoryTab", initSettingsJavaMemoryTab); // (preventDefault)
+
+    initSettingsUserCompteTab = this._callFunc("initSettingsUserCompteTab", initSettingsUserCompteTab); // (preventDefault)
+
+    initLauncherHomePanel = this._callFunc("initLauncherHomePanel", () => { // (preventDefault)
       refreshServer();
       refreshLauncherUserCompte();
     });
 
     //Overlay
 
-    setOverlayContent = this._callFunc("setOverlayContent", setOverlayContent);
+    setOverlayContent = this._callFunc("setOverlayContent", setOverlayContent); // (title, description, buttonClose = 'Fermer', buttonAction = null, timeLeft = null, timeLeftMessage = null, preventDefault)
 
-    toggleOverlay = this._callFunc("toggleOverlay", toggleOverlay);
+    toggleOverlay = this._callFunc("toggleOverlay", toggleOverlay); // (toggleState, preventDefault)
 
-    setActionHandler = this._callFunc("setActionHandler", setActionHandler);
+    setActionHandler = this._callFunc("setActionHandler", setActionHandler); // (handler, preventDefault)
 
-    setCloseHandler = this._callFunc("setCloseHandler", setCloseHandler);
+    setCloseHandler = this._callFunc("setCloseHandler", setCloseHandler); // (handler, preventDefault)
 
-    setGameUpdateOverlayContent = this._callFunc("setGameUpdateOverlayContent", setGameUpdateOverlayContent);
+    setGameUpdateOverlayContent = this._callFunc("setGameUpdateOverlayContent", setGameUpdateOverlayContent); // (preventDefault)
 
-    toggleGameUpdateOverlay = this._callFunc("toggleGameUpdateOverlay", toggleGameUpdateOverlay);
+    toggleGameUpdateOverlay = this._callFunc("toggleGameUpdateOverlay", toggleGameUpdateOverlay); // (toggleState, preventDefault)
 
-    setGameUpdateOverlayTitle = this._callFunc("setGameUpdateOverlayTitle", setGameUpdateOverlayTitle);
+    setGameUpdateOverlayTitle = this._callFunc("setGameUpdateOverlayTitle", setGameUpdateOverlayTitle); // (title, preventDefault)
 
-    setGameUpdateOverlayDownload = this._callFunc("setGameUpdateOverlayDownload", setGameUpdateOverlayDownload);
+    setGameUpdateOverlayDownload = this._callFunc("setGameUpdateOverlayDownload", setGameUpdateOverlayDownload); // (text, preventDefault)
 
-    setGameUpdateOverlayDownloadProgress = this._callFunc("setGameUpdateOverlayDownloadProgress", setGameUpdateOverlayDownloadProgress);
+    setGameUpdateOverlayDownloadProgress = this._callFunc("setGameUpdateOverlayDownloadProgress", setGameUpdateOverlayDownloadProgress); // (percent, color = 'blue', preventDefault)
   }
 
   _callFunc(emit, callback){

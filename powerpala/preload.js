@@ -17,6 +17,34 @@
     require.cache[require.resolve(join(paladiumPath, "app", "assets", "js", "isdev"))].exports = true;
   }
 
+  let jsPath = join(paladiumPath, "app", "assets", "js");
+
+  //Fix the smaller 'err' not defined stupid error
+  const ConfigManager = require(join(jsPath, 'config_manager'));
+  const Mojang = require(join(jsPath, 'mojang'));
+  const logger = require(join(jsPath, 'logger_util'))('auth');
+  require(join(jsPath, "auth_manager.js"));
+  require.cache[require.resolve(join(jsPath, "auth_manager.js"))].exports.validateSelected = async () => {
+    const current = ConfigManager.getSelectedAccount();
+    const isValid = await Mojang.validate(current.accessToken, ConfigManager.getClientToken());
+    if (!isValid) {
+      try {
+        const session = await Mojang.refresh(current.accessToken, ConfigManager.getClientToken());
+        ConfigManager.updateAuthAccount(current.uuid, session.accessToken);
+        ConfigManager.save();
+      } catch (err) {
+        logger.debug("Error while validating selected profile: " + err);
+        logger.log("Account access token is invalid.");
+        return false;
+      }
+      logger.log("Mojang account access token validated.");
+      return true;
+    } else {
+      logger.log("Mojang account access token validated.");
+      return true;
+    }
+  }
+
   require.cache[require.resolve("jquery")] = {exports: jQuery};
 
   new Powerpala();
@@ -47,7 +75,16 @@
     }
     element.click = handler => {
       if(element.id == "launcher-home-play-button") handler = function () { gameUpdate() };
-      element.addEventListener("click", handler);
+      if(element.id == "settings-user-logout-button") {
+        let interval;
+        interval = setInterval(() => {
+          if(window.powerpala && window.powerpala.api && window.powerpala.api.events){
+            handler = powerpala.api.events._callFunc("logout", handler);
+            element.addEventListener("click", handler);
+            clearInterval(interval);
+          }
+        }, 100);
+      } else element.addEventListener("click", handler);
     }
     element.html = text => {
       element.innerHTML = text;

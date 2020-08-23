@@ -6,6 +6,11 @@ module.exports = class MaintenanceBypass extends Plugin {
   }
 
   async startPlugin(){
+    powerpala.api.events.on("initLauncher", (preventDefault) => {
+      preventDefault();
+      console.log("dfsfdsfsd");
+    });
+
     this.func = (title, description, buttonClose = 'Fermer', buttonAction = null, timeLeft = null, timeLeftMessage = null, preventDefault) => {
       if(title != "Maintenance du launcher !" || buttonAction != null) return;
       preventDefault();
