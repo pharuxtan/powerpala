@@ -35,6 +35,9 @@ module.exports = class Powerpala {
     //Edit the launcher title
     if(process.platform != "darwin") document.querySelector(".frame-content p[class=title]").innerHTML = "<b>Paladium Launcher - Powerpala</b>";
 
+    //Edit the launcher logo
+    document.querySelector("img[src='assets/images/logo.png'].logo").src = join(__dirname, "logo.png");
+
     //Remove useless "Accueil"
     document.querySelector(".nav-left > a").innerHTML = "";
     document.querySelector(".nav-left > a").style.cursor = "default";
