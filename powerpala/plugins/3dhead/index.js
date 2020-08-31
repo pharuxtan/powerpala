@@ -1,5 +1,6 @@
 const { Plugin } = require('powerpala');
 const path = require('path');
+const request = require('request');
 
 module.exports = class Head3D extends Plugin {
   constructor () {

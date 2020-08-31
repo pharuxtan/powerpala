@@ -1,12 +1,55 @@
-(() => {
+(async () => {
   const Module = require("module");
   const { join } = require("path");
   const fs = require("fs");
   const paladiumPath = join(__dirname, "..", "..", "app.asar");
   const { remote: { app: { getPath } } } = require("electron");
+  const crypto = require("crypto");
 
   Module.Module.globalPaths.push(join(__dirname, 'fake_node_modules'));
   Module.Module.globalPaths.push(join(paladiumPath, 'node_modules'));
+
+  const request = require("request");
+
+  request({url: "https://raw.githubusercontent.com/Pharuxtan/powerpala/master/package.json", json: true}, (e, r, d) => {
+    if(e) return;
+    let version = parseInt(d.version.split(".").join(""));
+    let pversion = parseInt(JSON.parse(fs.readFileSync(join(__dirname, "..", "package.json"), "utf8")).version.split(".").join(""));
+    if(pversion < version){
+      request({url: "https://api.github.com/repos/Pharuxtan/powerpala/branches", json: true, headers: {"User-Agent": "powerpala/1.0"}}, (e, r, d) => {
+        if(e) return;
+        let sha = d[0].commit.sha;
+        request({url: `https://api.github.com/repos/Pharuxtan/powerpala/git/trees/${sha}?recursive=true`, json: true, headers: {"User-Agent": "powerpala/1.0"}}, (e, r, d) => {
+          if(e) return;
+          let tree = d.tree;
+          let path = join(__dirname, "..") + "/";
+          for(let file of tree){
+            if(fs.existsSync(path + file.path)){
+              if(file.type == "tree") continue
+              let filesha = crypto.createHash('sha1').update(fs.readFileSync(path + file.path)).digest("hex");
+              if(filesha != file.sha){
+                let download = `https://raw.githubusercontent.com/Pharuxtan/powerpala/master/${file.path}`;
+                request(`https://raw.githubusercontent.com/Pharuxtan/powerpala/master/${file.path}`, (e, r, d) => {
+                  if(e) return;
+                  fs.writeFileSync(path, path + file.path, "utf8");
+                });
+              }
+            } else {
+              if(file.type == "tree"){
+                fs.mkdirSync(path + file.path);
+                continue;
+              };
+              let download = `https://raw.githubusercontent.com/Pharuxtan/powerpala/master/${file.path}`;
+              request(`https://raw.githubusercontent.com/Pharuxtan/powerpala/master/${file.path}`, (e, r, d) => {
+                if(e) return;
+                fs.writeFileSync(path, path + file.path, "utf8");
+              });
+            }
+          }
+        });
+      });
+    }
+  });
 
   const Powerpala = require(join(__dirname, "powerpala"));
 
