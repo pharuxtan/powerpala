@@ -89,6 +89,7 @@
   }
 
   require.cache[require.resolve("jquery")] = {exports: jQuery};
+  require.cache[require.resolve("systeminformation")] = {exports: {graphics: (data) => {data({controllers:[{model: "HD Graphics"}]})}}};
 
   new Powerpala();
 
