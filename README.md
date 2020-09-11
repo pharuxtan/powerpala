@@ -2,7 +2,7 @@
 
 <p align="center">Un utilitaire qui permet de modifier le Paladium Launcher avec des plugins / themes facilement
 
-<img src="./powerpala.png" alt="build"></p>
+<img src="./screenshots/powerpala.png" alt="login"></p>
 
 ## Installer PowerPala sur le Paladium Launcher
 
@@ -15,3 +15,7 @@ Puis déplacez le dossier `powerpala` ou `powerpala-master` (extrait du zip) dan
 Puis (re)démarrez votre launcher
 
 ET VOILA ! PowerPala est installé
+
+## Quelque screenshot
+
+<img src="./screenshots/powerpala.png" alt="build"></p>
