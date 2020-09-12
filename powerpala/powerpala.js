@@ -200,8 +200,9 @@ module.exports = class Powerpala {
     let bakFreemem = os.freemem;
     os.freemem = () => {
       try {
-        let out = execSync("sysctl -n hw.physmem").toString().split("\n");
+        let out = execSync("vm_stat | awk '/free/ {gsub(/\\./, \"\", $3); print $3}'").toString().split("\n");
         if(out[0] == void 0 || out[0] === "" || (out = parseInt(out[0])) == NaN) return bakFreemem();
+        out *= 4096;
         return out;
       } catch(e) {
         return bakFreemem();
