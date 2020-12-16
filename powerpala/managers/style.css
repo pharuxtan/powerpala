@@ -33,6 +33,10 @@ body, html {
   border: 1px solid rgba(244, 104, 0, 1);
 }
 
+.button-orange {
+  display: inline;
+}
+
 .info-container.fix {
   position: relative;
   display: inline-block;
