@@ -34,7 +34,7 @@ body, html {
 }
 
 .button-orange {
-  display: inline;
+  display: inline !important;
 }
 
 .info-container.fix {
