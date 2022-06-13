@@ -1,6 +1,6 @@
 <script>
-	import { fly } from 'svelte/transition';
-	import LogoLarge from '../images/LogoLarge.svelte';
+  import { fly } from 'svelte/transition';
+  import LogoLarge from '../images/LogoLarge.svelte';
   export let state;
   let animate = false;
   setTimeout(() => {

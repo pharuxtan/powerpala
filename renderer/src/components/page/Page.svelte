@@ -1,8 +1,8 @@
 <script>
-	import { fade } from 'svelte/transition';
-	import Powerpala from "./tabs/Powerpala.svelte";
-	import Plugins from "./tabs/Plugins.svelte";
-	import Themes from "./tabs/Themes.svelte";
+  import { fade } from 'svelte/transition';
+  import Powerpala from "./tabs/Powerpala.svelte";
+  import Plugins from "./tabs/Plugins.svelte";
+  import Themes from "./tabs/Themes.svelte";
 
   let tab = "powerpala"
 

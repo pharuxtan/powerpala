@@ -1,5 +1,5 @@
 <script>
-	import { slideSideOut, slideSideIn } from "../transitions.js";
+  import { slideSideOut, slideSideIn } from "../transitions.js";
   let fromInit = localStorage.getItem("first") == "true";
 
   function slideIn(..._){
