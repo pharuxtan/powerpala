@@ -7,7 +7,7 @@
     animate = true;
   }, 10);
   function changeState(){
-		localStorage.setItem("first", true);
+    localStorage.setItem("first", true);
     state = "splash";
   }
 </script>
@@ -18,18 +18,18 @@
       <LogoLarge />
     </div>
   {/if}
-	{#if animate}
-		<div in:fly="{{delay: 150, duration: 800, y: 30, opacity: 0}}">
-			<div class=message>
-				Bienvenue sur votre nouveau launcher !
-			</div>
-		</div>
-	{/if}
-	{#if animate}
-		<div in:fly="{{delay: 300, duration: 800, y: 30, opacity: 0}}">
-			<input type="button" value="Commencer" on:click={changeState} />
-		</div>
-	{/if}
+  {#if animate}
+    <div in:fly="{{delay: 150, duration: 800, y: 30, opacity: 0}}">
+      <div class=message>
+        Bienvenue sur votre nouveau launcher !
+      </div>
+    </div>
+  {/if}
+  {#if animate}
+    <div in:fly="{{delay: 300, duration: 800, y: 30, opacity: 0}}">
+      <input type="button" value="Commencer" on:click={changeState} />
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -43,16 +43,16 @@
     -webkit-user-select: none;
     user-select: none;
 
-		.logo {
+    .logo {
       position: absolute;
       top: 0px;
       left: 108px;
       width: 400px;
 
-			:global(svg){
-				fill: #fff;
-			}
-		}
+      :global(svg){
+        fill: #fff;
+      }
+    }
 
     .message {
       position: absolute;
@@ -64,19 +64,19 @@
       font-size: 1.2em;
     }
 
-		input {
-			position: absolute;
-	    top: 180px;
-	    left: 50%;
-			transform: translate(-50%);
-	    cursor: pointer;
-	    font-size: 1.1em;
+    input {
+      position: absolute;
+      top: 180px;
+      left: 50%;
+      transform: translate(-50%);
+      cursor: pointer;
+      font-size: 1.1em;
 
-	    background-color: #fff;
-	    border: 1px solid #212121;
-	    border-radius: 6px;
-	    color: #303030;
-	    padding: 9px 12px;
-		}
+      background-color: #fff;
+      border: 1px solid #212121;
+      border-radius: 6px;
+      color: #303030;
+      padding: 9px 12px;
+    }
   }
 </style>

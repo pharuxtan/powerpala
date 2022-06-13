@@ -94,14 +94,14 @@
     }
 
     input {
-	    cursor: pointer;
-	    font-size: 1.1em;
+      cursor: pointer;
+      font-size: 1.1em;
 
-	    background-color: #fff;
-	    border: 1px solid #212121;
-	    border-radius: 6px;
-	    color: #303030;
-	    padding: 9px 12px;
+      background-color: #fff;
+      border: 1px solid #212121;
+      border-radius: 6px;
+      color: #303030;
+      padding: 9px 12px;
     }
   }
 </style>

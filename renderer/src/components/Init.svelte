@@ -13,7 +13,7 @@
     init = splash = false;
     powerpala.native.mount();
   }
-  
+
   let page = false;
 
   PowerpalaNatives.on("powerpalaComponent", (b) => {
@@ -49,9 +49,9 @@
 </script>
 
 <div class=powerpala style="pointer-events: {init || splash || page ? "all" : "none"};">
-	{#if init || splash}
-		<Frame/>
-	{/if}
+  {#if init || splash}
+    <Frame/>
+  {/if}
 
   {#if init}
     <div transition:fade={{ duration: 100 }} class=init>
@@ -60,14 +60,14 @@
     </div>
   {/if}
 
-	{#if splash}
-		<div transition:fade={{ duration: 100 }}>
-			<Splash />
-		</div>
-	{/if}
+  {#if splash}
+    <div transition:fade={{ duration: 100 }}>
+      <Splash />
+    </div>
+  {/if}
 
   {#if page}
-		<div class="drag"></div>
+    <div class="drag"></div>
     <div in:slideDownIn={{ duration: 1200 }} out:slideUpOut={{ duration: 1200 }} class=page>
       <Page />
     </div>
@@ -75,30 +75,30 @@
 </div>
 
 <style lang="scss">
-	:global(body, #game-page){
-		background-color: #12131b !important;
-	}
+  :global(body, #game-page){
+    background-color: #12131b !important;
+  }
 
-	:global(.tabs-header .tab:nth-last-child(2)){
-		display: none !important;
-	}
+  :global(.tabs-header .tab:nth-last-child(2)){
+    display: none !important;
+  }
 
-	:global(div#titlebar.powerpala){
-		width: 138px !important;
-		right: 0px !important;
-	}
+  :global(div#titlebar.powerpala){
+    width: 138px !important;
+    right: 0px !important;
+  }
 
-	:global(div#titlebar .button){
-		transition: background-color .1s;
-	}
+  :global(div#titlebar .button){
+    transition: background-color .1s;
+  }
 
-	:global(div#titlebar .button:hover){
-		background-color: #ffffff30;
-	}
+  :global(div#titlebar .button:hover){
+    background-color: #ffffff30;
+  }
 
-	:global(body.removemc a.navigation-item[title=Minecraft]){
-		display: none;
-	}
+  :global(body.removemc a.navigation-item[title=Minecraft]){
+    display: none;
+  }
 
   .powerpala {
     position: absolute;
@@ -110,22 +110,22 @@
     * {font-family: "Inter" }
   }
 
-	.drag {
-		height: 30px;
-		top: 0;
-		width: 130px;
-		position: fixed;
-		z-index: 9;
-		-webkit-app-region: drag;
-	}
+  .drag {
+    height: 30px;
+    top: 0;
+    width: 130px;
+    position: fixed;
+    z-index: 9;
+    -webkit-app-region: drag;
+  }
 
-	.page {
-		position: fixed;
-		top: 0px;
-		left: 0px;
+  .page {
+    position: fixed;
+    top: 0px;
+    left: 0px;
     width: 100vw;
     height: 100vh;
-	}
+  }
 
   .init {
     display: flex;
