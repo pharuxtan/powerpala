@@ -1,51 +1,51 @@
 <script>
-	import { fade } from "svelte/transition";
-	import { slideUpIn, slideUpOut, slideDownIn, slideDownOut } from "./transitions.js";
-	import Frame from "./Frame.svelte";
-	import Splash from "./splash/SplashManager.svelte";
-	import Page from "./page/Page.svelte";
+  import { fade } from "svelte/transition";
+  import { slideUpIn, slideUpOut, slideDownIn, slideDownOut } from "./transitions.js";
+  import Frame from "./Frame.svelte";
+  import Splash from "./splash/SplashManager.svelte";
+  import Page from "./page/Page.svelte";
 
-	let message = "Initialisation...";
+  let message = "Initialisation...";
 
-	let init = true;
-	let splash = false;
-	function mount() {
-	  init = splash = false;
-	  powerpala.native.mount();
-	}
+  let init = true;
+  let splash = false;
+  function mount() {
+    init = splash = false;
+    powerpala.native.mount();
+  }
+  
+  let page = false;
 
-	let page = false;
+  PowerpalaNatives.on("powerpalaComponent", (b) => {
+    if (b) document.querySelector("#titlebar").classList.add("powerpala");
+    else document.querySelector("#titlebar").classList.remove("powerpala");
+    page = b;
+  });
 
-	PowerpalaNatives.on("powerpalaComponent", (b) => {
-	  if (b) document.querySelector("#titlebar").classList.add("powerpala");
-	  else document.querySelector("#titlebar").classList.remove("powerpala");
-	  page = b;
-	});
+  (async () => {
+    let Powerpala = (await PowerpalaNatives.powerpala).default;
+    delete PowerpalaNatives.powerpala;
+    window.powerpala = new Powerpala();
 
-	(async () => {
-	  let Powerpala = (await PowerpalaNatives.powerpala).default;
-	  delete PowerpalaNatives.powerpala;
-	  window.powerpala = new Powerpala();
+    powerpala.on("initiated", () => {
+      message = "Démarrage des modules...";
+      powerpala.start();
+    });
 
-	  powerpala.on("initiated", () => {
-	    message = "Démarrage des modules...";
-	    powerpala.start();
-	  });
+    powerpala.on("ready", () => {
+      message = "Prêt";
+      if (window.location.href.endsWith("#/splash")) {
+        init = false;
+        splash = true;
+      } else {
+        mount();
+      }
+    });
 
-	  powerpala.on("ready", () => {
-	    message = "Prêt";
-	    if (window.location.href.endsWith("#/splash")) {
-	      init = false;
-	      splash = true;
-	    } else {
-	      mount();
-	    }
-	  });
+    powerpala.initialize();
 
-	  powerpala.initialize();
-
-	  if (await window.electron.isMacos()) document.body.classList.add("macos");
-	})();
+    if (await window.electron.isMacos()) document.body.classList.add("macos");
+  })();
 </script>
 
 <div class=powerpala style="pointer-events: {init || splash || page ? "all" : "none"};">
