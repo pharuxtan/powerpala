@@ -1,7 +1,0 @@
-{
-  "platform": "darwin",
-  "options": {
-    "frame": true,
-    "titleBarStyle": "hidden"
-  }
-}

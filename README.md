@@ -1,24 +1,48 @@
-<h1 align="center">PowerPala</h1>
+[![SOS Emulator Light](/assets/github/light-logo.svg)](https://github.com/pharuxtan/powerpala#gh-light-mode-only)
+[![SOS Emulator Dark](/assets/github/dark-logo.svg)](https://github.com/pharuxtan/powerpala#gh-dark-mode-only)
 
-<p align="center">Un utilitaire qui permet de modifier le Paladium Launcher avec des plugins / themes facilement
+<p align="center">
+  <a rel="LICENSE" href="https://github.com/pharuxtan/powerpala/blob/main/LICENSE">
+    <img src="https://img.shields.io/static/v1?label=license&message=gpl%203.0&labelColor=111111&color=ff5c00&style=for-the-badge&logo=data%3Aimage/png%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAABQAAAATCAYAAACQjC21AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHpFAACAgwAA/FcAAIDoAAB5FgAA8QEAADtfAAAcheDStWoAAAFGSURBVHjarJK9LgRhFIafWUuiEH/rJwrJClEq3IELUKgo3IrETWh0FC7BNVih0AoKBQoEydq11qMwm5yMsbPEm3yZd55zvnfO92VQKVhLak09UZeL%2BrsVZ9Qdv2tXnf1NYEndUushZFGthvemuq32FwWuq%2BeZid5DvZGpXambeYGr6qnd9dGldqaudQL3QuFWvVbbmaC6%2BprDr9WbwA4SdQW4BwaABb50CTykfjjwC%2BAx9SPAfOANYDxRCXpOnxNAM4ePA63Ul8NHR4E2QClsGgGG0jUR%2BFjglcAn8/pj4HTwUz/42FPJ68lOSDhCkR/O46XM0Qh3VcRH83jph%2BZefKUosBr8XA%2B%2BmufLAR4Dh6k/CrzWA691YOc/3Ejv6iNM3k59Xw%2B8D3gC9hN1ErjjfzSbqHVg8J8CG2XgBXgL4/9VCdD6HACaHdcHGCRMgQAAAABJRU5ErkJggg%3D%3D" alt="License">
+  </a>
+</p>
 
-<img src="./screenshots/start.png" alt="start"></p>
+----
 
-## Installer PowerPala sur le Paladium Launcher
+# Powerpala
 
-D'abord [clonez](git://github.com/pharuxtan/powerpala.git) ou téléchargez le [master.zip](https://github.com/pharuxtan/powerpala/archive/master.zip) du git
+Powerpala est un client de modification pour le paladium launcher, il vous permet d'y installer des plugins et des themes
 
-Après ouvrez votre launcher, faites `Ctrl+Maj+I` sur Windows/Linux ou `⌘+Alt+I` sur MacOS, allez dans `console` puis mettez `shell.openItem(path.join(__dirname, "..", ".."));` et faite entrée pour ouvrir le dossier ou le app.asar se trouve
+## Comment l'installer ?
 
-Puis déplacez le dossier `powerpala` ou `powerpala-master` (extrait du zip) dans le dossier ouvert et renommez le `app`
+### Prérequis
 
-Puis (re)démarrez votre launcher
+Vous aurez besoin d'installer Git et Node et d'avoir le Paladium Launcher
 
-ET VOILA ! PowerPala est installé
+1. `git` - https://git-scm.com/downloads
+2. `node` et `npm` - https://nodejs.org
+3. Le `Paladium Launcher`
+   - Windows: https://download.paladium-pvp.fr/launcher/download/Paladium.exe
+   - macOS: https://download.paladium-pvp.fr/launcher/download/Paladium.dmg
 
-## Quelques screenshots
+à noter que powerpala ne fonctionne pas avec le launcher V7 qui est actuellement celui sur mac, cependant powerpala est déjà prêt pour le launcher V8
 
-<img src="./screenshots/main.png" alt="main"></p>
-<img src="./screenshots/options-user.png" alt="options-user"></p>
-<img src="./screenshots/options-general.png" alt="options-general"></p>
-<img src="./screenshots/options-plugins.png" alt="options-plugins"></p>
+### Installation
+
+Maintenant nous assumons que vous avez installé correctement Git et Node et que vous avez le Paladium Launcher.
+
+1. Ouvrez une invite de commande/terminal (exemple: `CMD` si vous êtes sur Windows, ou `Terminal` si vous êtes sur macOS) - Pour ceux qui utilisent **Windows** n'exécutez surtout pas l'invite de commande avec les permissions d'administrateurs !
+2. Dans l'ordre, tapez ces commandes dans le terminal ouvert précédemment:
+   1. `git clone https://github.com/pharuxtan/powerpala`
+   2. `cd powerpala`
+   3. `npm run setup:inject`
+3. Quittez le Paladium Launcher si il est toujours ouvert
+4. Et démarrez le, powerpala devrait être injecté !
+
+### Désinstallation
+
+Pour déinstaller powerpala, allez toujours avec une invite de commande/terminal dans votre dossier contenant powerpala puis faite `npm run setup:uninject`, powerpala devrait être désinjecté, il vous reste plus qu'a supprimer le dossier de powerpala
+
+## Crédits
+
+Cet outil est basé sur le travail de [powercord](https://github.com/powercord-org) et de [vizality](https://github.com/vizality)

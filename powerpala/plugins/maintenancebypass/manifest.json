@@ -1,7 +1,0 @@
-{
-  "name": "Maintenance Bypass",
-  "version": "1.0.0",
-  "description": "Ajoute un bouton pour continuer même si la maintenance du launcher est actif",
-  "author": "Pharuxtan",
-  "license": "MIT"
-}

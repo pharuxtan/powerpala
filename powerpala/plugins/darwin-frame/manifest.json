@@ -1,8 +1,0 @@
-{
-  "name": "Native MacOS Frame",
-  "version": "1.0.0",
-  "platform": "darwin",
-  "description": "Change la barre de titre par la barre de titre de macOS",
-  "author": "Pharuxtan",
-  "license": "MIT"
-}

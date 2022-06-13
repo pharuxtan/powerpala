@@ -1,5 +1,41 @@
 {
-  "main": "index.js",
-  "version": "1.0.2",
-  "license": "MIT"
+  "name": "powerpala",
+  "version": "1.0.0",
+  "description": "Un client de modification pour la Paladium Launcher",
+  "main": "injector/index.js",
+  "author": "pharuxtan",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "setup:inject": "node setup.js inject",
+    "setup:uninject": "node setup.js uninject",
+    "app:build": "vite build"
+  },
+  "dependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.47",
+    "autoprefixer": "^10.4.7",
+    "chunk-text": "^2.0.1",
+    "image-size": "^1.0.1",
+    "isomorphic-git": "^1.17.3",
+    "lodash": "^4.17.21",
+    "mime": "^3.0.0",
+    "mime-types": "^2.1.35",
+    "module-alias": "^2.2.2",
+    "node-watch": "^0.7.3",
+    "pluralize": "^8.0.0",
+    "postcss": "^8.4.14",
+    "sass": "^1.52.1",
+    "sucrase": "^3.21.0",
+    "svelte": "^3.48.0",
+    "svelte-preprocess": "^4.10.6",
+    "tinycolor2": "^1.4.2",
+    "vite": "^2.9.9"
+  },
+  "_moduleAliases": {
+    "@powerpala/constants": "renderer/src/modules/constants",
+    "@powerpala/compilers": "renderer/src/compilers"
+  },
+  "devDependencies": {
+    "electron-log": "^4.4.7",
+    "electron-updater": "^5.0.1"
+  }
 }
