@@ -10,15 +10,6 @@ const whitelist = [
   'util',
   'fs',
 
-  // Powerpala imports
-  'lodash',
-  'tinycolor2',
-  'chunk-text',
-  'pluralize',
-  'mime-types',
-  'image-size',
-  'node-watch',
-
   // Paladium imports
   'electron-log',
 ];
@@ -42,7 +33,7 @@ window.require = module => {
         return Obj();
       }
     };
-    if (whitelist.includes(module) || module.startsWith('@powerpala')) {
+    if (whitelist.includes(module) || module.startsWith('@powerpala') || require.resolve(module).indexOf("powerpala") != -1) {
       return require(module);
     }
 
