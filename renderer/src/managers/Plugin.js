@@ -77,7 +77,9 @@ module.exports = class PluginManager {
   async remount(pluginID){
     try {
       await this.unmount(pluginID);
-    } catch(e) {}
+    } catch(e) {
+      delete require.cache[require.resolve(`../../../addons/plugins/${pluginID}/index.js`)];
+    }
     this.mount(pluginID);
     this._plugins.get(pluginID)._load();
   }
@@ -88,6 +90,15 @@ module.exports = class PluginManager {
     if(plugin._ready) await plugin._unload();
 
     this._plugins.delete(pluginID);
+
+    delete require.cache[require.resolve(`../../../addons/plugins/${pluginID}/index.js`)];
+  }
+
+  async reloadAll(){
+    let plugins = this.getPlugins();
+    for(let plugin of plugins){
+      await this.remount(plugin);
+    }
   }
 
   load(pluginID){

@@ -21,6 +21,10 @@
       window.powerpala("manager.plugins.disable")(this.id);
     }
   }
+
+  function reload(){
+    window.powerpala("manager.plugins.reloadAll")();
+  }
 </script>
 
 <div class="products">
@@ -49,8 +53,22 @@
     </div>
   {/each}
 </div>
+<input class="reload" type="button" value="Recharger les plugins" on:click={reload} />
 
 <style lang="scss">
+  .products {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow-y: overlay;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .product {
     position: relative;
     border-radius: 5px;
@@ -97,5 +115,12 @@
         font-size: 0.8em;
       }
     }
+  }
+
+  .reload {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
   }
 </style>

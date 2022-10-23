@@ -14,7 +14,7 @@ module.exports = class Settings {
   }
 
   get (key, defval) {
-    if(this.config[key]) return this.config[key];
+    if(key in this.config) return this.config[key];
     return defval;
   }
 
