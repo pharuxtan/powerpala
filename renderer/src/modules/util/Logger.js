@@ -1,11 +1,11 @@
-import { getRandomColor, getContrastColor, blendColors, shadeColor } from './Color.js';
-import { isArray, isEmptyArray, assertArray } from './Array.js';
-import { isString, assertString } from './String.js';
-import { assertObject } from './Object.js';
+const { getRandomColor, getContrastColor, blendColors, shadeColor } = require('./Color.js');
+const { isArray, isEmptyArray, assertArray } = require('./Array.js');
+const { isString, assertString } = require('./String.js');
+const { assertObject } = require('./Object.js');
 
 const _labels = [ 'Util', 'Logger' ];
 
-export const PRESET_LABELS = {
+const PRESET_LABELS = {
   watcher: [ '#f0f0f0' ],
   powerpala: [ '#ff9600', '#12131b' ],
   compiler: [ '#2d8d9c', '#1bc084' ],
@@ -17,7 +17,9 @@ export const PRESET_LABELS = {
   constants: [ '#1d2ade', '#1dc4de' ]
 };
 
-export function log (options) {
+exports.PRESET_LABELS = PRESET_LABELS;
+
+function log (options) {
   try {
     assertObject(options);
     options.type = 'log';
@@ -27,7 +29,9 @@ export function log (options) {
   }
 }
 
-export function warn (options) {
+exports.log = log;
+
+function warn (options) {
   try {
     assertObject(options);
     options.type = 'warn';
@@ -37,7 +41,9 @@ export function warn (options) {
   }
 }
 
-export function error (options) {
+exports.warn = warn;
+
+function error (options) {
   try {
     assertObject(options);
     options.type = 'error';
@@ -47,7 +53,9 @@ export function error (options) {
   }
 }
 
-export function deprecate (options) {
+exports.error = error;
+
+function deprecate (options) {
   try {
     assertObject(options);
     const { message } = options;
@@ -58,6 +66,8 @@ export function deprecate (options) {
     return _error(_labels.concat('deprecate'), err);
   }
 }
+
+exports.deprecate = deprecate;
 
 function _error (labels, ...message) {
   return error({ labels, message });

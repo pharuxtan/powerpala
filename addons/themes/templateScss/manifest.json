@@ -1,0 +1,7 @@
+{
+  "name": "SCSSTemplateTheme",
+  "description": "SCSS Template Theme",
+  "version": "1.0.0",
+  "author": "you",
+  "theme": "template.theme.scss"
+}

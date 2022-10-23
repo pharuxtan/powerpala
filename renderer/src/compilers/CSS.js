@@ -1,8 +1,8 @@
 const { promises: { readFile } } = require('fs');
 
-import Compiler from './compiler.js';
+const Compiler = require('./compiler.js');
 
-export default class CSS extends Compiler {
+module.exports = class CSS extends Compiler {
   async compile () {
     const css = await readFile(this.file, 'utf8');
     if (this.watcherEnabled) {

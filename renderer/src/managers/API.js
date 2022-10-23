@@ -1,10 +1,10 @@
 const { readdirSync, statSync } = require('fs');
 const { join, parse } = require('path');
 
-import { log, warn, error } from '../modules/util/Logger.js';
+const { log, warn, error } = require('../modules/util/Logger.js');
 const { Directories } = require('@powerpala/constants');
 
-export default class APIManager {
+module.exports = class APIManager {
   constructor () {
     this.dir = Directories.API;
     this._apis = [];
@@ -14,9 +14,7 @@ export default class APIManager {
   async mount (api) {
     try {
       api = parse(api).name;
-      let apiModule = await import(`powerpala://api/${api}.js`);
-
-      const APIClass = apiModule.default;
+      let APIClass = require(`../api/${api}.js`);
       powerpala.api[api.toLowerCase()] = new APIClass();
       this._apis.push(api.toLowerCase());
     } catch (err) {

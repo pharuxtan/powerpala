@@ -1,11 +1,11 @@
 const { extname } = require('path');
 
-import CSSCompiler from "./CSS.js";
-import SCSSCompiler from "./SCSS.js";
+const CSSCompiler = require("./CSS.js");
+const SCSSCompiler = require("./SCSS.js");
 
-export const css = CSSCompiler;
-export const scss = SCSSCompiler;
-export function resolveCompiler(file) {
+exports.css = CSSCompiler;
+exports.scss = SCSSCompiler;
+exports.resolveCompiler = function resolveCompiler(file) {
   const extension = extname(file).substr(1);
   switch (extension) {
     case 'scss': return new SCSSCompiler(file);

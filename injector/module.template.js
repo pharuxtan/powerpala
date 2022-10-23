@@ -13,8 +13,8 @@ WeakMap = class WeakMap extends window.WeakMap {
 
 // Replace componentGetter to add powerpala icon component
 
-let originalComponentGetter = Qt;
-Qt = function componentGetter(name){
+let originalComponentGetter = tn;
+tn = function componentGetter(name){
   if(name == "PowerpalaIcon"){
     return {
       name: "PowerpalaIcon",
@@ -74,8 +74,8 @@ Qt = function componentGetter(name){
 // Replace mount to mount vue  later
 let _mount;
 
-let originalInitSetup = $c;
-$c = function initSetup(...a){
+let originalInitSetup = dc;
+dc = function initSetup(...a){
   let setup = originalInitSetup(...a);
   let secondUse = false;
   return function (...b){
@@ -99,12 +99,12 @@ $c = function initSetup(...a){
 
 /* Powerpala Natives Export */
 
-let router = s2.config.globalProperties.$router;
-let store = s2.config.globalProperties.$store;
+let router = e2.config.globalProperties.$router;
+let store = e2.config.globalProperties.$store;
 
 // Fix App not loading properly because of later mount
 
-let getNotifs = s2._component.methods.getNotifs.bind({ $store: store });
+let getNotifs = e2._component.methods.getNotifs.bind({ $store: store });
 getNotifs();
 let notificationsInterval = setInterval(() => {
   getNotifs();
@@ -117,8 +117,8 @@ window.electron.onUserDataFetch(user => {
     store.commit("setSkinUrl", user.skinUrl);
 })
 
-s2._component.beforeMount = () => void 0;
-s2._component.beforeDestroy = () => clearInterval(notificationsInterval);
+e2._component.beforeMount = () => void 0;
+e2._component.beforeDestroy = () => clearInterval(notificationsInterval);
 
 // node require declaration
 
@@ -134,7 +134,7 @@ document.addEventListener("keypress", (event) => {
 
 // Add Powerpala Side Menu
 
-Ls.push({
+Ts.push({
   visibility: true,
   id: "powerpala",
   name: "Powerpala",
@@ -160,15 +160,14 @@ Ls.push({
 class PowerpalaNatives {
   mount(){
     _mount("#app");
-    window.powerpala.native.app.components = components;
+    window.PowerpalaNatives.app.components = components;
     this.emit("mounted", components);
-    delete window.powerpala.native.mount;
+    delete window.PowerpalaNatives.mount;
+    return components;
   }
 
-  powerpala = import("powerpala://renderer/src/powerpala.js");
-
   app = {
-    context: s2._context,
+    context: e2._context,
     router,
     store,
     components: null,
@@ -177,8 +176,6 @@ class PowerpalaNatives {
     openDevTools: window.electron._openDevTools,
     closeDevTools: window.electron._closeDevTools
   };
-
-  _compileSass = window.electron._compileSass;
 
   // Event Emitter
 
@@ -213,7 +210,7 @@ let gameSetup = gameComponents.setup;
 setInterval(() => {
   if(document.querySelector("#game-page__content .title") && document.querySelector("#game-page__content .title").innerText.toUpperCase() == "POWERPALA"){
     if(document.querySelector("#game-page").style.display != "none"){
-      window.powerpala.native.emit("powerpalaComponent", true);
+      window.PowerpalaNatives.emit("powerpalaComponent", true);
       document.querySelector("#game-page").style.display = "none";
     }
   } else if(document.querySelector("#game-page") && document.querySelector("#game-page").style.display != "flex") {
@@ -223,7 +220,7 @@ setInterval(() => {
 
 gameComponents.render = function render(...args){
   if(args[2].id != "powerpala" && document.querySelector("#game-page")) {
-    window.powerpala.native.emit("powerpalaComponent", false);
+    window.PowerpalaNatives.emit("powerpalaComponent", false);
   }
 
   return gameRender(...args);

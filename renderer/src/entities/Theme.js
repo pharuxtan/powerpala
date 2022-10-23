@@ -1,8 +1,8 @@
-import { resolveCompiler } from '../compilers/index.js';
-import { createElement } from '../modules/util/DOM.js';
-import { log, warn, error } from '../modules/util/Logger.js';
+const { resolveCompiler } = require('../compilers/index.js');
+const { createElement } = require('../modules/util/DOM.js');
+const { log, warn, error } = require('../modules/util/Logger.js');
 
-export default class Theme {
+module.exports = class Theme {
   constructor (themeID, manifest) {
     this.entityID = themeID;
     this.compiler = resolveCompiler(manifest.effectiveTheme);

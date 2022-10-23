@@ -1,9 +1,9 @@
-import { error } from './Logger.js';
+const { error } = require('./Logger.js');
 
 const _labels = [ 'Util', 'DOM' ];
 const _error = (labels, ...message) => error({ labels, message });
 
-export const createElement = (type, props) => {
+const createElement = (type, props) => {
   try {
     const element = document.createElement(type);
     for (const prop in props) {
@@ -19,7 +19,9 @@ export const createElement = (type, props) => {
   }
 };
 
-export const getElementDimensions = node => {
+exports.createElement = createElement;
+
+const getElementDimensions = node => {
   try {
     let widthList = [ 'margin-right', 'margin-left', 'border-right', 'border-left', 'padding-right', 'padding-left', 'width' ];
     let heightList = [ 'margin-top', 'margin-bottom', 'border-top', 'border-bottom', 'padding-top', 'padding-bottom', 'height' ];
@@ -43,7 +45,9 @@ export const getElementDimensions = node => {
   }
 };
 
-export const injectShadowStyles = (shadowRootElement, insertBeforeSelector, styles) => {
+exports.getElementDimensions = getElementDimensions;
+
+const injectShadowStyles = (shadowRootElement, insertBeforeSelector, styles) => {
   try {
     const root = shadowRootElement?.shadowRoot;
     if (root !== null) {
@@ -59,13 +63,15 @@ export const injectShadowStyles = (shadowRootElement, insertBeforeSelector, styl
   }
 };
 
+exports.injectShadowStyles = injectShadowStyles;
+
 /**
  * A simple utility for conditionally joining class names together.
  * @see {@link https://github.com/JedWatson/classnames}
  * @param {string|object|Array} items Potential class names we're trying to join
  * @returns {string} String of class names joined together
  */
-export const joinClassNames = (...items) => {
+const joinClassNames = (...items) => {
   try {
     const classes = [];
     for (const item of items) {
@@ -95,3 +101,5 @@ export const joinClassNames = (...items) => {
     _error(_labels.concat('joinClassNames'), err);
   }
 };
+
+exports.joinClassNames = joinClassNames;

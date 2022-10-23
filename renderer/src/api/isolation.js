@@ -1,6 +1,6 @@
-const { API } = powerpala.entities;
+const { API } = require("@powerpala/entities");
 
-export default class Isolation extends API {
+module.exports = class Isolation extends API {
   constructor(){
     super();
   }
@@ -67,13 +67,13 @@ export default class Isolation extends API {
 
   /*
     Exemple:
-    window.powerpala.api.isolation.modify("loadURL", async (cb, ...args) => {
+    powerpala.api.isolation.modify("loadURL", async (cb, ...args) => {
       if(args[X] == "") return;
       return cb();
     })
   */
 
   modify(name, callback){
-    window.electron._modifier(name, callback);
+    paladiumApi._modifier(name, callback);
   }
 }

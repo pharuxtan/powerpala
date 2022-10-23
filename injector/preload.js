@@ -1,49 +1,14 @@
-const { ipcRenderer, contextBridge, clipboard, shell, nativeImage } = require('electron');
+const { ipcRenderer, contextBridge } = require('electron');
 const { isArray, isEmpty, sample, debounce, escapeRegExp, isString, camelCase, lowerCase, startCase, upperFirst, snakeCase, kebabCase, isObject } = require('lodash');
 const { createHash } = require("crypto");
 
 require('module-alias/register');
 
-const whitelist = [
-  // Node
-  'path',
-  'util',
-  'fs',
-
-  // Paladium imports
-  'electron-log',
-];
-
-window.require = module => {
-  try {
-    if(module == "electron") return { clipboard, shell, nativeImage, ipcRenderer };
-    if(module == "lodash") return { isArray, isEmpty, sample, debounce, escapeRegExp, isString, camelCase, lowerCase, startCase, upperFirst, snakeCase, kebabCase, isObject };
-    if(module == "crypto") return {
-      createHash: (hash) => {
-        let h = createHash(hash);
-        function Obj(){
-          return {
-            update: (...args) =>{
-              h.update(...args);
-              return Obj();
-            },
-            digest: (...args) => h.digest(...args)
-          }
-        }
-        return Obj();
-      }
-    };
-    if (whitelist.includes(module) || module.startsWith('@powerpala') || require.resolve(module).indexOf("powerpala") != -1) {
-      return require(module);
-    }
-
-    throw new Error(`Node module "${module.toString()}" is not whitelisted and cannot be used in this scope.`);
-  } catch (err) {
-    return console.error(err);
-  }
-};
+window.require = require;
 
 require("@powerpala/constants");
+
+window.paladiumApi = {};
 
 let originalExposeInMainWorld = contextBridge.exposeInMainWorld;
 contextBridge.exposeInMainWorld = (apiKey, apiObject) => {
@@ -59,7 +24,7 @@ contextBridge.exposeInMainWorld = (apiKey, apiObject) => {
     }
   }
   for(let name of Object.keys(apiObject)) modifier(name);
-  return originalExposeInMainWorld(apiKey, {
+  window.paladiumApi = {
     ...apiObject,
     _modifier(name, callback){
       if(!apis[name]) return;
@@ -87,7 +52,8 @@ contextBridge.exposeInMainWorld = (apiKey, apiObject) => {
     _onLauncherStart(fn){
       ipcRenderer.on('launcherStart', (event, ...args) => fn(...args));
     }
-  })
+  };
+  return originalExposeInMainWorld(apiKey, window.paladiumApi);
 }
 
 if (process.platform === 'darwin' && !process.env.PATH.includes('/usr/local/bin')) {

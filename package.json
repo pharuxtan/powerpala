@@ -32,7 +32,8 @@
   },
   "_moduleAliases": {
     "@powerpala/constants": "renderer/src/modules/constants",
-    "@powerpala/compilers": "renderer/src/compilers"
+    "@powerpala/compilers": "renderer/src/compilers",
+    "@powerpala/entities": "renderer/src/entities"
   },
   "devDependencies": {
     "electron-log": "^4.4.7",

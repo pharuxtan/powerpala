@@ -1,12 +1,12 @@
 const tinycolor = require('tinycolor2');
 
-import { error } from './Logger.js';
-import { assertString } from './String.js';
+const { error } = require('./Logger.js');
+const { assertString } = require('./String.js');
 
 const _labels = [ 'Util', 'Color' ];
 const _error = (labels, ...message) => error({ labels, message });
 
-export const _hex2hsl = color => {
+const _hex2hsl = color => {
   try {
     // Convert hex to RGB first
     let r, g, b;
@@ -55,7 +55,9 @@ export const _hex2hsl = color => {
   }
 };
 
-export const _hex2int = color => {
+exports._hex2hsl = _hex2hsl;
+
+const _hex2int = color => {
   try {
     if (color.length === 4) {
       color = `#${color[1]}${color[1]}${color[2]}${color[2]}${color[3]}${color[3]}`;
@@ -66,7 +68,9 @@ export const _hex2int = color => {
   }
 };
 
-export const _hex2rgb = color => {
+exports._hex2int = _hex2int;
+
+const _hex2rgb = color => {
   try {
     let r, g, b;
 
@@ -89,7 +93,9 @@ export const _hex2rgb = color => {
   }
 };
 
-export const _hsl2hex = color => {
+exports._hex2rgb = _hex2rgb;
+
+const _hsl2hex = color => {
   try {
     const ex = /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
 
@@ -169,7 +175,9 @@ export const _hsl2hex = color => {
   }
 };
 
-export const _hsl2int = color => {
+exports._hsl2hex = _hsl2hex;
+
+const _hsl2int = color => {
   try {
     const ex = /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
 
@@ -237,7 +245,9 @@ export const _hsl2int = color => {
   }
 };
 
-export const _hsl2rgb = color => {
+exports._hsl2int = _hsl2int;
+
+const _hsl2rgb = color => {
   try {
     const ex = /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
 
@@ -305,7 +315,9 @@ export const _hsl2rgb = color => {
   }
 };
 
-export const _int2hex = color => {
+exports._hsl2rgb = _hsl2rgb;
+
+const _int2hex = color => {
   try {
     return `#${((color) >>> 0).toString(16).padStart(6, '0')}`;
   } catch (err) {
@@ -313,7 +325,9 @@ export const _int2hex = color => {
   }
 };
 
-export const _int2hsl = color => {
+exports._int2hex = _int2hex;
+
+const _int2hsl = color => {
   try {
     // Convert int to hex first
     const hex = `#${((color) >>> 0).toString(16)}`;
@@ -354,7 +368,9 @@ export const _int2hsl = color => {
   }
 };
 
-export const _int2rgb = color => {
+exports._int2hsl = _int2hsl;
+
+const _int2rgb = color => {
   try {
     return `rgb(${(color >> 16 & 255)} ${(color >> 8 & 255)} ${(255 & color)})`;
   } catch (err) {
@@ -362,7 +378,9 @@ export const _int2rgb = color => {
   }
 };
 
-export const _rgb2hex = color => {
+exports._int2rgb = _int2rgb;
+
+const _rgb2hex = color => {
   try {
     const ex = /^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
 
@@ -400,7 +418,9 @@ export const _rgb2hex = color => {
   }
 };
 
-export const _rgb2hsl = color => {
+exports._rgb2hex = _rgb2hex;
+
+const _rgb2hsl = color => {
   try {
     const ex = /^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
 
@@ -463,7 +483,9 @@ export const _rgb2hsl = color => {
   }
 };
 
-export const _rgb2int = color => {
+exports._rgb2hsl = _rgb2hsl;
+
+const _rgb2int = color => {
   try {
     const ex = /^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
 
@@ -497,7 +519,9 @@ export const _rgb2int = color => {
   }
 };
 
-export const getContrastColor = color => {
+exports._rgb2int = _rgb2int;
+
+const getContrastColor = color => {
   try {
     let r, g, b;
     const _hex = arg => {
@@ -520,7 +544,9 @@ export const getContrastColor = color => {
   }
 };
 
-export const getRandomColor = (type = 'hex') => {
+exports.getContrastColor = getContrastColor;
+
+const getRandomColor = (type = 'hex') => {
   try {
     assertString(type);
     if ([ 'int', 'hex', 'rgb', 'hsl' ].indexOf(type?.toLowerCase()) < 0) {
@@ -540,7 +566,9 @@ export const getRandomColor = (type = 'hex') => {
   }
 };
 
-export const saturateColor = (color, amount) => {
+exports.getRandomColor = getRandomColor;
+
+const saturateColor = (color, amount) => {
   try {
 
   } catch (err) {
@@ -548,7 +576,9 @@ export const saturateColor = (color, amount) => {
   }
 };
 
-export const rotateHue = (color, amount) => {
+exports.saturateColor = saturateColor;
+
+const rotateHue = (color, amount) => {
   try {
     return tinycolor(color).spin(amount).toString();
   } catch (err) {
@@ -556,7 +586,9 @@ export const rotateHue = (color, amount) => {
   }
 };
 
-export const getComplement = color => {
+exports.rotateHue = rotateHue;
+
+const getComplement = color => {
   try {
     // Make sure the color is an identifiable type
     const type = getColorType(color);
@@ -575,7 +607,9 @@ export const getComplement = color => {
   }
 };
 
-export const getColorType = color => {
+exports.getComplement = getComplement;
+
+const getColorType = color => {
   try {
     const ex = {
       hex: /^#([\da-f]{3}){1,2}$/i,
@@ -593,7 +627,9 @@ export const getColorType = color => {
   }
 };
 
-export const toHex = color => {
+exports.getColorType = getColorType;
+
+const toHex = color => {
   try {
     // Make sure the color is an identifiable type
     const type = getColorType(color);
@@ -607,7 +643,9 @@ export const toHex = color => {
   }
 };
 
-export const toHsl = color => {
+exports.toHex = toHex;
+
+const toHsl = color => {
   try {
     // Make sure the color is an identifiable type
     const type = getColorType(color);
@@ -623,7 +661,9 @@ export const toHsl = color => {
   }
 };
 
-export const toInt = color => {
+exports.toHsl = toHsl;
+
+const toInt = color => {
   try {
     // Make sure the color is an identifiable type
     const type = getColorType(color);
@@ -639,7 +679,9 @@ export const toInt = color => {
   }
 };
 
-export const toRgb = color => {
+exports.toInt = toInt;
+
+const toRgb = color => {
   try {
     // Make sure the color is an identifiable type
     const type = getColorType(color);
@@ -656,7 +698,9 @@ export const toRgb = color => {
   }
 };
 
-export const blendColors = (firstColor, secondColor, percent = 0.5) => {
+exports.toRgb = toRgb;
+
+const blendColors = (firstColor, secondColor, percent = 0.5) => {
   try {
     const firstColorType = getColorType(firstColor);
     const secondColorType = getColorType(secondColor);
@@ -712,7 +756,9 @@ export const blendColors = (firstColor, secondColor, percent = 0.5) => {
   }
 };
 
-export const shadeColor = (color, percent) => {
+exports.blendColors = blendColors;
+
+const shadeColor = (color, percent) => {
   try {
     // Make sure the color is an identifiable type
     const type = getColorType(color);
@@ -759,3 +805,5 @@ export const shadeColor = (color, percent) => {
     _error(_labels.concat('shadeColor'), err);
   }
 };
+
+exports.shadeColor = shadeColor;

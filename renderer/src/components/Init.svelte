@@ -11,7 +11,8 @@
   let splash = false;
   function mount() {
     init = splash = false;
-    powerpala.native.mount();
+    let comp = PowerpalaNatives.mount();
+    powerpala("sendComponents")(comp);
   }
 
   let page = false;
@@ -23,16 +24,14 @@
   });
 
   (async () => {
-    let Powerpala = (await PowerpalaNatives.powerpala).default;
-    delete PowerpalaNatives.powerpala;
-    window.powerpala = new Powerpala();
+    window.powerpala = new require("vm").runInThisContext(await fetch("powerpala://renderer/src/powerpala.js").then(res => res.text()));
 
-    powerpala.on("initiated", () => {
+    powerpala("on")("initiated", () => {
       message = "Démarrage des modules...";
-      powerpala.start();
+      powerpala("start")();
     });
 
-    powerpala.on("ready", () => {
+    powerpala("on")("ready", () => {
       message = "Prêt";
       if (window.location.href.endsWith("#/splash")) {
         init = false;
@@ -42,7 +41,7 @@
       }
     });
 
-    powerpala.initialize();
+    powerpala("initialize")();
 
     if (await window.electron.isMacos()) document.body.classList.add("macos");
   })();

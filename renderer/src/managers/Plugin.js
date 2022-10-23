@@ -1,11 +1,11 @@
-import { log, warn, error } from '../modules/util/Logger.js';
+const { log, warn, error } = require('../modules/util/Logger.js');
 const { existsSync, mkdirSync, readdirSync, readFileSync } = require('fs');
 const { Directories } = require('@powerpala/constants');
 const { join } = require('path');
 
 let manifestKeys = [ 'name', 'version', 'description', 'author' ];
 
-export default class PluginManager {
+module.exports = class PluginManager {
   constructor () {
     this.dir = Directories.PLUGINS;
     this._plugins = new Map();
@@ -48,7 +48,7 @@ export default class PluginManager {
     if(manifest.platform != "all" && manifest.platform != process.platform) return;
 
     try {
-      const PluginClass = (await import(join("powerpala://", "plugins", pluginID, "index.js"))).default;
+      const PluginClass = require(`../../../addons/plugins/${pluginID}/index.js`);
       Object.defineProperties(PluginClass.prototype, {
         entityID: {
           get: () => pluginID,
@@ -63,7 +63,12 @@ export default class PluginManager {
           }
         }
       });
-      this._plugins.set(pluginID, new PluginClass());
+      let plugin = new PluginClass();
+      plugin.isolationInfo = {
+        pluginID,
+        manifest
+      }
+      this._plugins.set(pluginID, plugin);
     } catch (e) {
       this._error(`An error occurred while initializing "${pluginID}"!`, e);
     }

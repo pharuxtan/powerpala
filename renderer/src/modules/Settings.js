@@ -1,11 +1,11 @@
 const { existsSync, writeFileSync, readFileSync } = require("fs");
 const { join } = require("path");
 
-export default class Settings {
+module.exports = class Settings {
   config = {};
-  
+
   async init(){
-    this.file = join(await window.electron._getPowerpalaFolder(), "settings", "settings.json");
+    this.file = join(await paladiumApi._getPowerpalaFolder(), "settings", "settings.json");
     if(!existsSync(this.file)){
       writeFileSync(this.file, "{}", "utf8");
       this.set("removemc", true);

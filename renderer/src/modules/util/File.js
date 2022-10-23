@@ -5,9 +5,9 @@ const { escapeRegExp } = require('lodash');
 const imageSize = require('image-size');
 const { promisify } = require('util');
 
-import { error } from './Logger.js';
+const { error } = require('./Logger.js');
 const { Directories } = require('@powerpala/constants');
-import { isString } from './String.js';
+const { isString } = require('./String.js');
 
 const { readdir, lstat, unlink, rmdir } = promises;
 const _getImageSize = promisify(imageSize);
@@ -15,7 +15,7 @@ const _getImageSize = promisify(imageSize);
 const _labels = [ 'Util', 'File' ];
 const _error = (labels, ...message) => error({ labels, message });
 
-export const getCaller = path => {
+const getCaller = path => {
   try {
     if (path) {
       const plugin = path.match(new RegExp(`${escapeRegExp(Directories.PLUGINS)}.([-\\w]+)`));
@@ -51,7 +51,9 @@ export const getCaller = path => {
   }
 };
 
-export const getMimeType = async input => {
+exports.getCaller = getCaller;
+
+const getMimeType = async input => {
   try {
     let type = null;
     type = _getMimeType(input);
@@ -80,7 +82,9 @@ export const getMimeType = async input => {
   }
 };
 
-export const removeDirRecursive = async directory => {
+exports.getMimeType = getMimeType;
+
+const removeDirRecursive = async directory => {
   if (existsSync(directory)) {
     const files = await readdir(directory);
     for (const file of files) {
@@ -97,10 +101,12 @@ export const removeDirRecursive = async directory => {
   }
 };
 
+exports.removeDirRecursive = removeDirRecursive;
+
 /**
  * Gets the dimensions of an image or video. Works for URLs (http/blob/data/protocol).
  */
-export const getMediaDimensions = async (url, mimeType) => {
+const getMediaDimensions = async (url, mimeType) => {
   mimeType = mimeType || await getMimeType(url);
   // Check if it's an image
   if (mimeType?.split('/')[0] === 'image') {
@@ -130,13 +136,17 @@ export const getMediaDimensions = async (url, mimeType) => {
   }
 };
 
-export const convertUrlToFile = (url, fileName) => {
+exports.getMediaDimensions = getMediaDimensions;
+
+const convertUrlToFile = (url, fileName) => {
   return get(url)
     .then(res => res.arrayBuffer())
     .then(async buffer => new File([ buffer ], fileName, { type: await getMimeType(url) }));
 };
 
-export const getObjectURL = async (path, allowedExtensions = [ '.png', '.jpg', '.jpeg', '.webp', '.gif' ]) => {
+exports.convertUrlToFile = convertUrlToFile;
+
+const getObjectURL = async (path, allowedExtensions = [ '.png', '.jpg', '.jpeg', '.webp', '.gif' ]) => {
   if (isString(allowedExtensions) && allowedExtensions !== 'all') {
     allowedExtensions = [ allowedExtensions ];
   }
@@ -197,3 +207,5 @@ export const getObjectURL = async (path, allowedExtensions = [ '.png', '.jpg', '
 
   return urlObjects;
 };
+
+exports.getObjectURL = getObjectURL;

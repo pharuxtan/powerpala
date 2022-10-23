@@ -4,7 +4,7 @@ const watch = require('node-watch');
 const { join } = require('path');
 const { Directories } = require('@powerpala/constants');
 
-export default class Compiler {
+module.exports = class Compiler {
   constructor (file) {
     this.file = file;
     this.dir = Directories.CACHE;
@@ -164,12 +164,12 @@ export default class Compiler {
       if(!this.#events[name]) this.#events[name] = [];
       this.#events[name].push(func);
     }
-  
+
     off(name, func){
       if(!this.#events[name] || this.#events[name].indexOf(func) == -1) return;
       this.#events[name].splice(this.#events[name].indexOf(func), 1);
     }
-  
+
     emit(name, ...args){
       if(!this.#events[name]) return;
       for(let func of this.#events[name]){

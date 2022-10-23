@@ -1,9 +1,9 @@
-import { log, warn, error } from '../modules/util/Logger.js';
+const { log, warn, error } = require('../modules/util/Logger.js');
 const { join } = require('path');
 const { Directories } = require('@powerpala/constants');
 const { readdirSync, existsSync, mkdirSync, readFileSync, promises: { lstat } } = require('fs');
 
-import Theme from '../entities/Theme.js';
+const Theme = require('../entities/Theme.js');
 
 const fileRegex = /\.((s?c)ss)$/;
 
@@ -13,7 +13,7 @@ const ErrorTypes = Object.freeze({
   INVALID_MANIFEST: 'INVALID_MANIFEST'
 });
 
-export default class ThemeManager {
+module.exports = class ThemeManager {
   constructor(){
     this.dir = Directories.THEMES;
     this._themes = new Map();
@@ -64,7 +64,7 @@ export default class ThemeManager {
         this._error('Failed to load manifest', e);
         return;
       }
-      
+
       manifest = JSON.parse(readFileSync(manifestFile, "utf8"));
     } catch (e) {
       this._logError(ErrorTypes.MANIFEST_LOAD_FAILED, [ themeID ]);

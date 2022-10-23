@@ -1,12 +1,12 @@
 const { isObject: _isObject, isEmpty: _isEmpty } = require('lodash');
-import { toPlural, assertString } from './String.js';
-import { log, error } from './Logger.js';
+const { toPlural, assertString } = require('./String.js');
+const { log, error } = require('./Logger.js');
 
 const _labels = [ 'Util', 'Object' ];
 const _log = (labels, ...message) => log({ labels, message });
 const _error = (labels, ...message) => error({ labels, message });
 
-export const _traverse = function*(obj, targetValue, exactMatch = false, type, currentPath = '') {
+const _traverse = function*(obj, targetValue, exactMatch = false, type, currentPath = '') {
   try {
     if (typeof obj !== 'object') return false;
 
@@ -43,7 +43,9 @@ export const _traverse = function*(obj, targetValue, exactMatch = false, type, c
   }
 };
 
-export const _find = (obj, targetValue, exact = false, type) => {
+exports._traverse = _traverse;
+
+const _find = (obj, targetValue, exact = false, type) => {
   try {
     assertString(targetValue);
 
@@ -93,12 +95,14 @@ export const _find = (obj, targetValue, exact = false, type) => {
   }
 };
 
+exports._find = _find;
+
 /**
  * Checks if the input is an object.
  * @param {*} input Argument input
  * @returns {boolean} Whether or not the input is an object
  */
-export const isObject = input => {
+const isObject = input => {
   try {
     return _isObject(input);
   } catch (err) {
@@ -106,24 +110,28 @@ export const isObject = input => {
   }
 };
 
+exports.isObject = isObject;
+
 /**
  * Asserts that the input is an object.
  * If it isn't an object, it throws an error, otherwise it does nothing.
  * @param {*} input Argument input
  * @throws {TypeError} Throw an error if the input is not an object
  */
-export const assertObject = input => {
+const assertObject = input => {
   if (!isObject(input)) {
     throw new TypeError(`Expected an object but received ${typeof input}.`);
   }
 };
+
+exports.assertObject = assertObject;
 
 /**
  * Checks if the input is an empty object.
  * @param {*} input Argument input
  * @returns {boolean} Whether or not the input is an empty object
  */
-export const isEmptyObject = input => {
+const isEmptyObject = input => {
   try {
     return _isEmpty(input);
   } catch (err) {
@@ -131,7 +139,9 @@ export const isEmptyObject = input => {
   }
 };
 
-export const keysToLowerCase = (obj, nested = false) => {
+exports.isEmptyObject = isEmptyObject;
+
+const keysToLowerCase = (obj, nested = false) => {
   try {
     return Object.keys(obj).reduce((accumulator, key) => {
       let val = obj[key];
@@ -144,7 +154,9 @@ export const keysToLowerCase = (obj, nested = false) => {
   }
 };
 
-export const excludeProperties = (obj, ...keys) => {
+exports.keysToLowerCase = keysToLowerCase;
+
+const excludeProperties = (obj, ...keys) => {
   try {
     return Object.keys(obj)
       .filter(key => !keys.includes(key))
@@ -154,7 +166,9 @@ export const excludeProperties = (obj, ...keys) => {
   }
 };
 
-export const findEntriesByKeyword = (obj, keyword, exact = false) => {
+exports.excludeProperties = excludeProperties;
+
+const findEntriesByKeyword = (obj, keyword, exact = false) => {
   try {
     return _find(obj, keyword, exact, 'all');
   } catch (err) {
@@ -162,7 +176,9 @@ export const findEntriesByKeyword = (obj, keyword, exact = false) => {
   }
 };
 
-export const findEntriesByKey = (obj, key, exact = false) => {
+exports.findEntriesByKeyword = findEntriesByKeyword;
+
+const findEntriesByKey = (obj, key, exact = false) => {
   try {
     return _find(obj, key, exact, 'key');
   } catch (err) {
@@ -170,11 +186,15 @@ export const findEntriesByKey = (obj, key, exact = false) => {
   }
 };
 
-export const findEntriesByValue = (obj, value, exact = false) => {
+exports.findEntriesByKey = findEntriesByKey;
+
+const findEntriesByValue = (obj, value, exact = false) => {
   return _find(obj, value, exact, 'value');
 };
 
-export const removeUndefinedProperties = obj => {
+exports.findEntriesByValue = findEntriesByValue;
+
+const removeUndefinedProperties = obj => {
   try {
     Object.keys(obj).forEach(key => {
       if (obj[key] && typeof obj[key] === 'object') removeEmptyProperties(obj[key]);
@@ -185,3 +205,5 @@ export const removeUndefinedProperties = obj => {
     _error(_labels.concat('removeEmptyProperties'), err);
   }
 };
+
+exports.removeUndefinedProperties = removeUndefinedProperties;

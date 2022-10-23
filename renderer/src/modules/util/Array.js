@@ -1,7 +1,7 @@
 const { isArray: _isArray, isEmpty: _isEmpty, sample: _sample } = require('lodash');
 
-import { error } from './Logger.js';
-import { isString } from './String.js';
+const { error } = require('./Logger.js');
+const { isString } = require('./String.js');
 
 const _labels = [ 'Util', 'Array' ];
 const _error = (labels, ...message) => error({ labels, message });
@@ -11,7 +11,7 @@ const _error = (labels, ...message) => error({ labels, message });
  * @param {*} input Argument input
  * @returns {boolean} Whether or not the input is an array
  */
-export const isArray = input => {
+const isArray = input => {
   try {
     return _isArray(input);
   } catch (err) {
@@ -19,16 +19,20 @@ export const isArray = input => {
   }
 };
 
+exports.isArray = isArray;
+
 /**
  * Flattens an array.
  * @param {Array} array Array input
  * @returns {string|null}
  */
-export const flattenArray = array => {
+const flattenArray = array => {
   return array.reduce((flat, toFlatten) => (
     flat.concat(isArray(toFlatten) ? flattenArray(toFlatten) : toFlatten)
   ), []);
 };
+
+exports.flattenArray = flattenArray;
 
 /**
  * Asserts that the input is an array.
@@ -36,7 +40,7 @@ export const flattenArray = array => {
  * @param {*} input Argument input
  * @throws {TypeError} Throw an error if the input is not an array
  */
-export const assertArray = input => {
+const assertArray = input => {
   /**
    * We do not want to use a try...catch here purposefully in order to
    * get proper stack traces and labels.
@@ -46,13 +50,15 @@ export const assertArray = input => {
   }
 };
 
+exports.assertArray = assertArray;
+
 /**
  * Asserts that the input is an array. If it isn't, throw an error, otherwise do nothing.
  * @param {Array} array Array to process
  * @param {('and'|'or')} [lastItemConnector='and'] Word that is used to connect the last array item
  * @returns {Promise<string>} Array returned as a string list, joined by commas and "and" or "or" for the final item
  */
-export const toSentence = async (array, lastItemConnector = 'and') => {
+const toSentence = async (array, lastItemConnector = 'and') => {
   try {
     // Assert argument types
     assertArray(array);
@@ -72,12 +78,14 @@ export const toSentence = async (array, lastItemConnector = 'and') => {
   }
 };
 
+exports.toSentence = toSentence;
+
 /**
  * Checks if the input is an empty array.
  * @param {*} input Argument input
  * @returns {boolean} Whether or not the input is an empty array
  */
-export const isEmptyArray = input => {
+const isEmptyArray = input => {
   try {
     return _isEmpty(input);
   } catch (err) {
@@ -85,15 +93,19 @@ export const isEmptyArray = input => {
   }
 };
 
+exports.isEmptyArray = isEmptyArray;
+
 /**
  * Asserts that the input is an array. If it isn't, throw an error, otherwise do nothing.
  * @param {Array} array Array to process
- * @returns {*} Random item from the array
+ * @returns {*} Random item require(the array
  */
-export const getRandomItem = array => {
+const getRandomItem = array => {
   try {
     return _sample(array);
   } catch (err) {
     _error(_labels.concat('getRandomItem'), err);
   }
 };
+
+exports.getRandomItem = getRandomItem;

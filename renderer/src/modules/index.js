@@ -1,2 +1,2 @@
-export { default as util } from "./util/index.js";
-export const constants = require("@powerpala/constants");
+exports.util = require("./util/index.js");
+exports.constants = require("@powerpala/constants");

@@ -13,8 +13,8 @@
     <div></div>
   {:then bool}
     {#if !bool}
-      <div class=button on:click={minimize}></div>
-      <div class=button on:click={close}></div>
+      <div class=button on:click={minimize} on:keypress={()=>"dummy"}></div>
+      <div class=button on:click={close} on:keypress={()=>"dummy"}></div>
     {/if}
   {/await}
 </div>

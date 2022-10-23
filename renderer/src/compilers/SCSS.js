@@ -1,9 +1,9 @@
 const { promises: { readFile }, existsSync, statSync } = require('fs');
 const { join, dirname, posix, sep } = require('path');
 
-import Compiler from './compiler.js';
+const Compiler = require('./compiler.js');
 
-export default class SCSS extends Compiler {
+module.exports = class SCSS extends Compiler {
   async listFiles () {
     return [
       this.file,
@@ -12,7 +12,7 @@ export default class SCSS extends Compiler {
   }
 
   _compile () {
-    return powerpala.native?._compileSass(this.file);
+    return paladiumApi._compileSass(this.file);
   }
 
   async _resolveDeps (file, resolvedFiles = []) {

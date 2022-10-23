@@ -1,7 +1,7 @@
-import { log, warn, error } from '../modules/util/Logger.js';
-import { isArray } from '../modules/util/Array.js';
+const { log, warn, error } = require('../modules/util/Logger.js');
+const { isArray } = require('../modules/util/Array.js');
 
-export default class API {
+module.exports = class API {
   constructor () {
     this._labels = [ 'API', this.constructor.name ];
     this._ready = false;

@@ -1,13 +1,13 @@
-import { log, warn, error } from '../modules/util/Logger.js';
-import { isArray } from '../modules/util/Array.js';
+const { log, warn, error } = require('../modules/util/Logger.js');
+const { isArray } = require('../modules/util/Array.js');
 const { existsSync } = require('fs');
 const { join } = require("path");
-import { createElement } from '../modules/util/DOM.js';
-import { resolveCompiler } from '../compilers/index.js';
+const { createElement } = require('../modules/util/DOM.js');
+const { resolveCompiler } = require('../compilers/index.js');
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-export default class Plugin {
+module.exports = class Plugin {
   constructor(){
     this._labels = [ 'Plugin', this.constructor.name ];
     this._ready = false;

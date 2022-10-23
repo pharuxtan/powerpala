@@ -1,11 +1,11 @@
- import * as logger from './Logger.js';
- import * as object from './Object.js';
- import * as string from './String.js';
- import * as array from './Array.js';
- import * as color from './Color.js';
- import * as dom from './DOM.js';
- 
- export default {
+const logger = require('./Logger.js');
+const object = require('./Object.js');
+const string = require('./String.js');
+const array = require('./Array.js');
+const color = require('./Color.js');
+const dom = require('./DOM.js');
+
+ module.exports = {
    logger,
    object,
    string,

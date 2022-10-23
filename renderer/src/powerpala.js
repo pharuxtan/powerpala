@@ -1,33 +1,27 @@
-import { log as _log, warn as _warn, error as _error, deprecate as _deprecate } from './modules/util/Logger.js';
-import { isArray } from './modules/util/Array.js';
-import { toPlural } from './modules/util/String.js';
-import Settings from './modules/Settings.js';
+const { log: _log, warn: _warn, error: _error, deprecate: _deprecate } = require('../renderer/src/modules/util/Logger.js');
+const { isArray } = require('../renderer/src/modules/util/Array.js');
+const { toPlural } = require('../renderer/src/modules/util/String.js');
+const Settings = require('../renderer/src/modules/Settings.js');
 
-import API from './entities/API.js';
-import Plugin from './entities/Plugin.js';
-import Theme from './entities/Theme.js';
-
-export default class Powerpala {
+class Powerpala {
   constructor () {
-    this.native = window.PowerpalaNatives;
-    delete window.PowerpalaNatives;
-
     this._labels = [ 'Powerpala', 'Core' ];
-    this.entities = { API, Plugin, Theme };
   }
+
+  sendComponents(comp) { this.components = comp; };
 
   async initialize () {
     try {
       console.log('%c ', `background: url('powerpala://assets/images/console-banner.png') no-repeat center / contain; padding: 110px 350px; font-size: 1px; margin: 10px 0;`);
-     this.log("Initializing core...");
-     this.manager = {};
-     const managers = [ 'API', 'Plugin', 'Theme'];
-     for (const manager of managers) {
-      const formatted = toPlural(manager);
-      this.manager[formatted.toLowerCase()] = new (await import(`./managers/${manager}.js`)).default();
-     }
+      this.log("Initializing core...");
+      this.manager = {};
+      const managers = [ 'API', 'Plugin', 'Theme'];
+      for (const manager of managers) {
+        const formatted = toPlural(manager);
+        this.manager[formatted.toLowerCase()] = new (require(`../renderer/src/managers/${manager}.js`));
+      }
 
-     this.emit("initiated");
+      this.emit("initiated");
     } catch (err) {
       return this.error(err);
     }
@@ -36,7 +30,7 @@ export default class Powerpala {
   async start () {
     this.log("Starting modules...");
     this.modules = {};
-    const modules = await import('./modules/index.js');
+    const modules = require('../renderer/src/modules/index.js');
     Object.assign(this.modules, modules);
 
     this.api = {};
@@ -96,22 +90,35 @@ export default class Powerpala {
     return _deprecate({ labels: this._labels, message });
   }
 
-  #events = {}
+  events = {}
 
   on(name, func){
-    if(!this.#events[name]) this.#events[name] = [];
-    this.#events[name].push(func);
+    if(!this.events[name]) this.events[name] = [];
+    this.events[name].push(func);
   }
 
   off(name, func){
-    if(!this.#events[name] || this.#events[name].indexOf(func) == -1) return;
-    this.#events[name].splice(this.#events[name].indexOf(func), 1);
+    if(!this.events[name] || this.events[name].indexOf(func) == -1) return;
+    this.events[name].splice(this.events[name].indexOf(func), 1);
   }
 
   emit(name, ...args){
-    if(!this.#events[name]) return;
-    for(let func of this.#events[name]){
+    if(!this.events[name]) return;
+    for(let func of this.events[name]){
       func(...args);
     }
   }
 }
+
+let powerpala = new Powerpala();
+
+(function(id){
+  let keys = id.split(".");
+  let obj = powerpala;
+  for(let key of keys){
+    let newObj = obj[key];
+    if(typeof newObj === "function") newObj = newObj.bind(obj);
+    obj = newObj;
+  }
+  return obj;
+});
