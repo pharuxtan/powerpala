@@ -13,6 +13,7 @@
     init = splash = false;
     let comp = PowerpalaNatives.mount();
     powerpala("sendComponents")(comp);
+    powerpala("emit")("mounted");
   }
 
   let page = false;

@@ -6,6 +6,7 @@ const Settings = require('../renderer/src/modules/Settings.js');
 class Powerpala {
   constructor () {
     this._labels = [ 'Powerpala', 'Core' ];
+    this.electron = paladiumApi;
   }
 
   sendComponents(comp) { this.components = comp; };
