@@ -16,33 +16,33 @@ body, #game-page {
 .main-nav {
   background-color: #ffffff1a!important;
   border-right-color: rgba(0,0,0,.1) !important;
+}
 
-  .main-nav__container {
-    background-color: #FFF!important;
+.main-nav__container {
+  background-color: #FFF!important;
 
-    .navigation-item {
-      background-color: #E7E7E7!important;
-      border-color: #DEDEDE!important;
+  .navigation-item {
+    background-color: #E7E7E7!important;
+    border-color: #DEDEDE!important;
 
-      &.router-link-active {
-        background-color: #000!important;
+    &.router-link-active {
+      background-color: #000!important;
 
-        &[title=Paladium], &[title=Powerpala] {
-          svg:nth-last-child(odd) {
-            fill: #fff!important;
-          }
+      &[title=Paladium], &[title=Powerpala] {
+        svg:nth-last-child(odd) {
+          fill: #fff!important;
         }
       }
     }
+  }
 
-    .notifications-btn {
-      .notifications-btn-badge {
-        border-color: #E7E7E7!important;
-      }
+  .notifications-btn {
+    .notifications-btn-badge {
+      border-color: #E7E7E7!important;
+    }
 
-      svg * {
-        fill: #000!important;
-      }
+    svg * {
+      fill: #000!important;
     }
   }
 }
