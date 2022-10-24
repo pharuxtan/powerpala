@@ -1,0 +1,7 @@
+{
+  "name": "Thème blanc",
+  "description": "Certaine personne aime avoir un thème blanc, donc il est la :p",
+  "version": "1.0.0",
+  "author": "pharuxtan",
+  "theme": "white.theme.scss"
+}

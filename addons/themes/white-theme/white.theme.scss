@@ -1,0 +1,249 @@
+body, #game-page {
+  background-color: #EDECE4!important;
+}
+
+.modal-close {
+  background-color: #E7E7E7!important;
+  border-color: #DEDEDE!important;
+
+  svg * {
+    fill: #000!important;
+  }
+}
+
+// Navbar
+
+.main-nav__container {
+  background-color: #FFF!important;
+
+  .navigation-item {
+    background-color: #E7E7E7!important;
+    border-color: #DEDEDE!important;
+
+    &.router-link-active {
+      background-color: #000!important;
+
+      &[title=Paladium], &[title=Powerpala] {
+        svg:nth-last-child(odd) {
+          fill: #fff!important;
+        }
+      }
+    }
+  }
+
+  .notifications-btn {
+    .notifications-btn-badge {
+      border-color: #E7E7E7!important;
+    }
+
+    svg * {
+      fill: #000!important;
+    }
+  }
+}
+
+// Notifications
+
+.notifications-modal {
+  background-color: #F7F7F7!important;
+  border-color: #DEDEDE!important;
+
+  h2 {
+    color: #000!important;
+
+    svg * {
+      fill: #000!important;
+    }
+  }
+
+  .tabs {
+    svg * {
+      fill: #7D7D7D!important;
+    }
+
+    .tabs-header {
+      .tab {
+        color: #000!important;
+
+        .badge {
+          color: #fff!important;
+        }
+
+        &.tab-selected {
+          background-color: #F7F7F7!important;
+          border-color: #DEDEDE!important;
+        }
+      }
+    }
+
+    .notification {
+      color: #000!important;
+
+      p {
+        color: #7D7D7D!important;
+      }
+
+      &:hover {
+        background-color: #D7D7D7!important;
+        border-color: #BEBEBE!important;
+      }
+    }
+  }
+}
+
+// Game page
+
+#game-page__background::after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(transparent, #FFFFFF79);
+}
+
+#game-page__footer {
+  .spotlight__container {
+    background-color: #F7F7F7!important;
+    border-color: #DEDEDE!important;
+  }
+
+  .shop-card-container {
+    background-color: #F1F1F1!important;
+    border-color: #DEDEDE!important;
+
+    .shop-card-container__details {
+      background-color: #E7E7E7!important;
+      border-color: #DEDEDE!important;
+
+      .subtitle {
+        color: #7D7D7D!important;
+
+        &.add-subtitle {
+          color: #181818!important;
+        }
+      }
+
+      .price {
+        color: #000!important;
+      }
+    }
+  }
+}
+
+// Settings
+
+.settings-modal {
+  background-color: #F7F7F7!important;
+  border-color: #DEDEDE!important;
+
+  h2, h3, h4, .memory-slider-recommended {
+    color: #000!important;
+  }
+
+  h2 svg * {
+    fill: #000!important;
+  }
+
+  .tab {
+    &[name=Launcher], &[name=Comptes] {
+      h3 svg * {
+        fill: #000!important;
+      }
+    }
+
+    .icon svg * {
+      fill: #000!important;
+    }
+
+    .big-toggle {
+      background-color: #E7E7E7!important;
+      border-color: #DEDEDE!important;
+    }
+
+    .expander {
+      background-color: #E7E7E7!important;
+      border-color: #DEDEDE!important;
+
+      .third-party-licenses {
+        background-color: #00000005!important;
+      }
+
+      .expander-content {
+        color: #7D7D7D!important;
+      }
+
+      .slider-touch-indicator {
+        color: #000!important;
+      }
+
+      .resolution-data svg * {
+        fill: #000!important;
+      }
+    }
+
+    .accounts-grid {
+      .user-card, .accounts-grid__add {
+        background-color: #E7E7E7!important;
+        border-color: #DEDEDE!important;
+      }
+
+      .accounts-grid__add {
+        color: #000!important;
+      }
+    }
+  }
+}
+
+// Powerpala
+
+
+.powerpala {
+  .page {
+    .tab {
+      color: #000!important;
+
+      border-left-color: #EBE9E0!important;
+      border-right-color: #EBE9E0!important;
+      border-top-color: #EBE9E0!important;
+      background-color: #E9E7DD!important;
+
+      &.active {
+        border-left-color: #E6E5D9!important;
+        border-right-color: #E6E5D9!important;
+        border-top-color: #E6E5D9!important;
+        background-color: #DEDCCC!important;
+      }
+    }
+
+    .content {
+      background-color: #DEDCCC!important;
+
+      .product {
+        border-color: #DFDDDA!important;
+        background-color: #D7D4C1!important;
+
+        color: #000!important;
+
+        .divider {
+          border-bottom-color: rgba(190,187,181,.6) !important;
+        }
+      }
+    }
+  }
+
+  .splash {
+    svg * {
+      fill: #000!important;
+    }
+
+    .message {
+      color: #000!important;
+    }
+  }
+}
+
+#titlebar.powerpala .button {
+  color: #000!important;
+}

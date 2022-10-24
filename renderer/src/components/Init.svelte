@@ -79,7 +79,7 @@
     background-color: #12131b !important;
   }
 
-  :global(.tabs-header .tab:nth-last-child(2)){
+  :global(.settings-modal .tabs-header .tab:nth-last-child(2)){
     display: none !important;
   }
 
