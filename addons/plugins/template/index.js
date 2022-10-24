@@ -6,7 +6,7 @@ module.exports = class TemplatePlugin extends Plugin {
   }
 
   async start(){
-    console.log("Hello World!")
+    this.log("Hello World!");
   }
 
   async stop(){
