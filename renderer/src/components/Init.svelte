@@ -26,7 +26,8 @@
   (async () => {
     window.preload = new require("vm").runInThisContext(await fetch("powerpala://renderer/src/powerpala.js").then(res => res.text()));
 
-    preload("powerpala.setExecuteInIsolation")(function(url){
+    preload("powerpala.setExecuteInIsolation")(async function(url, useEval){
+      if(useEval) return eval(await fetch(url).then(res => res.text()));
       let script = document.createElement("script");
       script.setAttribute("type", "module");
       script.setAttribute("async", "async");

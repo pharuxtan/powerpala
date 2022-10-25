@@ -101,11 +101,11 @@ module.exports = class PluginManager {
     }
   }
 
-  load(pluginID){
+  async load(pluginID){
     const plugin = this.get(pluginID);
     if(!plugin) throw new Error(`Tried to load a non installed plugin (${plugin})`);
     if(plugin._ready) return this._error(`Tried to load an already loaded plugin (${pluginID})`);
-    plugin._load();
+    await plugin._load();
   }
 
   unload(pluginID){
@@ -140,7 +140,7 @@ module.exports = class PluginManager {
       if(sync && !this.get(plugin.entityID)._ready){
         this.load(plugin.entityID);
         missingPlugins.push(plugin.entityID);
-      } else if(!sync) this.load(plugin.entityID);
+      } else if(!sync) await this.load(plugin.entityID);
     }
 
     if(sync) return missingPlugins;

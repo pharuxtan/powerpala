@@ -148,3 +148,10 @@ onWeakMapSet((key) => {
     };
   }
 });
+
+let _beforeMount = powerpala.app.components.SettingsModal.beforeMount;
+powerpala.app.components.SettingsModal.beforeMount = async function beforeMount(){
+  await _beforeMount.call(this);
+  this.totalMem = Math.ceil(await window.electron.getTotalMem() / 1073741824);
+  this.freeMem = Math.round(await window.electron.getFreeMem() / 1073741824 * 10) / 10;
+}

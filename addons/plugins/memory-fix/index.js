@@ -3,14 +3,12 @@ const { execSync } = require("child_process");
 const isolation = powerpala.api.isolation;
 const os = process.binding("os");
 
-module.exports = class TemplatePlugin extends Plugin {
+module.exports = class MemoryFix extends Plugin {
   constructor(){
     super();
   }
 
   async start(){
-    powerpala.executeInIsolation(this.getURL("isolation.js"));
-
     isolation.modify(isolation.GET_TOTAL_MEM, async (cb, ...args) => {
       if(process.platform === "win32"){ // Windows
         return Math.ceil(os.getTotalMem() / 1073741824) * 1073741824;
@@ -40,6 +38,8 @@ module.exports = class TemplatePlugin extends Plugin {
         return freeMem * 1024;
       }
     });
+
+    await powerpala.executeInIsolation(this.getURL("isolation.js"), true);
   }
 
   async stop(){

@@ -1,5 +1,17 @@
 /* Powerpala Functions */
 
+// Get components
+let components = {};
+
+let _defineComponent = z;
+z = function defineComponent(options){
+  let component = _defineComponent(options);
+  components[component.name] = component;
+  return component;
+}
+
+// Emit cache data
+
 let weakMapSetFuncs = [];
 
 window.onWeakMapSet = function (cb){
@@ -12,23 +24,20 @@ window.offWeakMapSet = function (cb){
   weakMapSetFuncs.splice(weakMapSetFuncs.indexOf(cb), 1);
 }
 
-// Get components after mount
-let components = {};
 WeakMap = class WeakMap extends window.WeakMap {
   constructor() { super() }
 
   set(key, value){
     for(let func of weakMapSetFuncs) func(key, value);
-    if(typeof key.name == "string" && typeof key == "object" && !["default"].includes(key.name)) components[key.name] = key;
     super.set(key, value);
   }
 }
 
 // Replace componentGetter to add powerpala icon component
 
-let originalComponentGetter = tn;
-tn = function componentGetter(name){
-  if(name == "PowerpalaIcon"){
+let _resolveDynamicComponent = tn;
+tn = function resolveDynamicComponent(component){
+  if(component == "PowerpalaIcon"){
     return {
       name: "PowerpalaIcon",
       render(){
@@ -81,26 +90,26 @@ tn = function componentGetter(name){
       }
     }
   }
-  return originalComponentGetter(name);
+  return _resolveDynamicComponent(component);
 }
 
-// Replace mount to mount vue  later
+// Replace mount to mount vue later
 let _mount;
 
-let originalInitSetup = dc;
-dc = function initSetup(...a){
-  let setup = originalInitSetup(...a);
+let _createAppAPI = dc;
+dc = function createAppAPI(render, hydrate){
+  let _createApp2 = _createAppAPI(render, hydrate);
   let secondUse = false;
-  return function (...b){
-    let app = setup.call(this, ...b);
+  return function createApp2(rootComponent, rootProps = null){
+    let app = _createApp2.call(this, rootComponent, rootProps);
     let self = this;
     let _use = app.use;
-    app.use = function use(...c){
-      if(secondUse = !secondUse) return _use.call(this, ...c);
-      let a = _use.call(this, ...c);
-      _mount = a.mount;
-      a.mount = () => {};
-      return a;
+    app.use = function use(plugin, ...options){
+      if(secondUse = !secondUse) return _use.call(this, plugin, ...options);
+      let app2 = _use.call(this, plugin, ...options);
+      _mount = app2.mount;
+      app2.mount = () => {};
+      return app2;
     }
     return app;
   }
@@ -115,7 +124,7 @@ dc = function initSetup(...a){
 let router = e2.config.globalProperties.$router;
 let store = e2.config.globalProperties.$store;
 
-// Fix App not loading properly because of later mount
+// Fix app store not loading properly because of not instant mount
 
 let getNotifs = e2._component.methods.getNotifs.bind({ $store: store });
 getNotifs();
@@ -135,7 +144,7 @@ e2._component.beforeDestroy = () => clearInterval(notificationsInterval);
 
 // node require declaration
 
-const require = window.require  = window.electron._require;
+const require = window.require = window.electron._require;
 
 // Add DevTools shortcut
 
@@ -184,7 +193,7 @@ class Powerpala {
     context: e2._context,
     router,
     store,
-    components: null,
+    components,
     mounted: false,
 
     apiModifier: window.electron._modifier,
