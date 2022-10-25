@@ -1,11 +1,24 @@
 /* Powerpala Functions */
 
+let weakMapSetFuncs = [];
+
+window.onWeakMapSet = function (cb){
+  if(typeof cb !== "function") return;
+  weakMapSetFuncs.push(cb);
+}
+
+window.offWeakMapSet = function (cb){
+  if(weakMapSetFuncs.indexOf(cb) === -1) return;
+  weakMapSetFuncs.splice(weakMapSetFuncs.indexOf(cb), 1);
+}
+
 // Get components after mount
 let components = {};
 WeakMap = class WeakMap extends window.WeakMap {
   constructor() { super() }
 
   set(key, value){
+    for(let func of weakMapSetFuncs) func(key, value);
     if(typeof key.name == "string" && typeof key == "object" && !["default"].includes(key.name)) components[key.name] = key;
     super.set(key, value);
   }
@@ -157,12 +170,13 @@ Ts.push({
 
 // Powerpala Natives declaration
 
-class PowerpalaNatives {
+class Powerpala {
   mount(){
     _mount("#app");
-    window.PowerpalaNatives.app.components = components;
+    window.powerpala.app.components = components;
     this.emit("mounted", components);
-    delete window.PowerpalaNatives.mount;
+    delete window.powerpala.mount;
+    this.app.mounted = true;
     return components;
   }
 
@@ -171,6 +185,7 @@ class PowerpalaNatives {
     router,
     store,
     components: null,
+    mounted: false,
 
     apiModifier: window.electron._modifier,
     openDevTools: window.electron._openDevTools,
@@ -199,7 +214,7 @@ class PowerpalaNatives {
   }
 }
 
-window.PowerpalaNatives = new PowerpalaNatives();
+window.powerpala = new Powerpala();
 
 // Powerpala Page Loading
 
@@ -210,7 +225,7 @@ let gameSetup = gameComponents.setup;
 setInterval(() => {
   if(document.querySelector("#game-page__content .title") && document.querySelector("#game-page__content .title").innerText.toUpperCase() == "POWERPALA"){
     if(document.querySelector("#game-page").style.display != "none"){
-      window.PowerpalaNatives.emit("powerpalaComponent", true);
+      window.powerpala.emit("powerpalaComponent", true);
       document.querySelector("#game-page").style.display = "none";
     }
   } else if(document.querySelector("#game-page") && document.querySelector("#game-page").style.display != "flex") {
@@ -220,7 +235,7 @@ setInterval(() => {
 
 gameComponents.render = function render(...args){
   if(args[2].id != "powerpala" && document.querySelector("#game-page")) {
-    window.PowerpalaNatives.emit("powerpalaComponent", false);
+    window.powerpala.emit("powerpalaComponent", false);
   }
 
   return gameRender(...args);

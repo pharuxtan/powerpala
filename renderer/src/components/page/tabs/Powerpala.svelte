@@ -7,14 +7,14 @@
       id: "transparent",
       description: "Permet de rendre la fenêtre transparente (peut être utile pour les thèmes, nécessite un redémarrage du launcher)",
       default: false,
-      click: function(){ window.powerpala("settings.set")("transparent", this.checked) }
+      click: function(){ window.preload("powerpala.settings.set")("transparent", this.checked) }
     },
     {
       title: "Activer le multi-instance",
       id: "multi",
       description: "Permet de lancer plusieurs instances du Paladium Launcher, à noter que le multi instances n'est pas possible pour le launcher macOS",
       default: false,
-      click: function(){ window.powerpala("settings.set")("multi", this.checked) }
+      click: function(){ window.preload("powerpala.settings.set")("multi", this.checked) }
     },
     {
       title: "Enlever Minecraft Vanilla",
@@ -22,7 +22,7 @@
       description: "Enleve la page de minecraft vanilla",
       default: true,
       click: function(){
-        window.powerpala("settings.set")("removemc", this.checked);
+        window.preload("powerpala.settings.set")("removemc", this.checked);
         if(this.checked) document.body.classList.add("removemc");
         else document.body.classList.remove("removemc");
       }
@@ -35,7 +35,7 @@
     <div class="product">
       <div class="header">
         <div class="title">{product.title}</div>
-        <Switch id={product.id} click={product.click} checked={window.powerpala("settings.get")(product.id, product.default)} />
+        <Switch id={product.id} click={product.click} checked={window.preload("powerpala.settings.get")(product.id, product.default)} />
       </div>
       <div class="divider"></div>
       <div class="description">{product.description}</div>

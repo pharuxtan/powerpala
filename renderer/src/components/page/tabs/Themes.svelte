@@ -3,22 +3,22 @@
 
   let products = [];
 
-  for(let theme of window.powerpala("manager.themes.getThemes")().map(p => window.powerpala("manager.themes.get")(p))){
+  for(let theme of window.preload("powerpala.manager.themes.getThemes")().map(p => window.preload("powerpala.manager.themes.get")(p))){
     products.push({
       title: theme.manifest.name,
       id: theme.entityID,
       author: theme.manifest.author,
       version: theme.manifest.version,
       description: theme.manifest.description,
-      checked: window.powerpala("manager.themes.isEnabled")(theme.entityID)
+      checked: window.preload("powerpala.manager.themes.isEnabled")(theme.entityID)
     });
   }
 
   function checkClick(event){
     if(this.checked){
-      window.powerpala("manager.themes.enable")(this.id);
+      window.preload("powerpala.manager.themes.enable")(this.id);
     } else {
-      window.powerpala("manager.themes.disable")(this.id);
+      window.preload("powerpala.manager.themes.disable")(this.id);
     }
   }
 </script>

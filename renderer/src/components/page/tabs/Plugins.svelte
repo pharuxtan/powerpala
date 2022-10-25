@@ -3,27 +3,27 @@
 
   let products = [];
 
-  for(let { isolationInfo } of window.powerpala("manager.plugins.getPlugins")().map(p => window.powerpala("manager.plugins.get")(p))){
+  for(let { isolationInfo } of window.preload("powerpala.manager.plugins.getPlugins")().map(p => window.preload("powerpala.manager.plugins.get")(p))){
     products.push({
       title: isolationInfo.manifest.name,
       id: isolationInfo.pluginID,
       author: isolationInfo.manifest.author,
       version: isolationInfo.manifest.version,
       description: isolationInfo.manifest.description,
-      checked: window.powerpala("manager.plugins.isEnabled")(isolationInfo.pluginID)
+      checked: window.preload("powerpala.manager.plugins.isEnabled")(isolationInfo.pluginID)
     });
   }
 
   function checkClick(event){
     if(this.checked){
-      window.powerpala("manager.plugins.enable")(this.id);
+      window.preload("powerpala.manager.plugins.enable")(this.id);
     } else {
-      window.powerpala("manager.plugins.disable")(this.id);
+      window.preload("powerpala.manager.plugins.disable")(this.id);
     }
   }
 
   function reload(){
-    window.powerpala("manager.plugins.reloadAll")();
+    window.preload("powerpala.manager.plugins.reloadAll")();
   }
 </script>
 

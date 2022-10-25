@@ -44,6 +44,10 @@ module.exports = class Plugin {
     }
   }
 
+  getURL(path){
+    return `powerpala://plugins/${this.isolationInfo.pluginID}/${path}`;
+  }
+
   get dependencies(){
     return this.manifest.dependencies;
   }

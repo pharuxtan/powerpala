@@ -9,8 +9,6 @@ class Powerpala {
     this.electron = paladiumApi;
   }
 
-  sendComponents(comp) { this.components = comp; };
-
   async initialize () {
     try {
       console.log('%c ', `background: url('powerpala://assets/images/console-banner.png') no-repeat center / contain; padding: 110px 350px; font-size: 1px; margin: 10px 0;`);
@@ -91,6 +89,12 @@ class Powerpala {
     return _deprecate({ labels: this._labels, message });
   }
 
+  executeInIsolation = () => {};
+
+  setExecuteInIsolation(func){
+    this.executeInIsolation = func;
+  }
+
   events = {}
 
   on(name, func){
@@ -111,11 +115,11 @@ class Powerpala {
   }
 }
 
-let powerpala = new Powerpala();
+window.powerpala = new Powerpala();
 
 (function(id){
   let keys = id.split(".");
-  let obj = powerpala;
+  let obj = window;
   for(let key of keys){
     let newObj = obj[key];
     if(typeof newObj === "function") newObj = newObj.bind(obj);

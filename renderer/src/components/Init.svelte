@@ -11,28 +11,36 @@
   let splash = false;
   function mount() {
     init = splash = false;
-    let comp = PowerpalaNatives.mount();
-    powerpala("sendComponents")(comp);
-    powerpala("emit")("mounted");
+    powerpala.mount();
+    preload("powerpala.emit")("mounted");
   }
 
   let page = false;
 
-  PowerpalaNatives.on("powerpalaComponent", (b) => {
+  powerpala.on("powerpalaComponent", (b) => {
     if (b) document.querySelector("#titlebar").classList.add("powerpala");
     else document.querySelector("#titlebar").classList.remove("powerpala");
     page = b;
   });
 
   (async () => {
-    window.powerpala = new require("vm").runInThisContext(await fetch("powerpala://renderer/src/powerpala.js").then(res => res.text()));
+    window.preload = new require("vm").runInThisContext(await fetch("powerpala://renderer/src/powerpala.js").then(res => res.text()));
 
-    powerpala("on")("initiated", () => {
-      message = "Démarrage des modules...";
-      powerpala("start")();
+    preload("powerpala.setExecuteInIsolation")(function(url){
+      let script = document.createElement("script");
+      script.setAttribute("type", "module");
+      script.setAttribute("async", "async");
+      script.setAttribute("src", url);
+      document.body.appendChild(script);
+      script.remove();
     });
 
-    powerpala("on")("ready", () => {
+    preload("powerpala.on")("initiated", () => {
+      message = "Démarrage des modules...";
+      preload("powerpala.start")();
+    });
+
+    preload("powerpala.on")("ready", () => {
       message = "Prêt";
       if (window.location.href.endsWith("#/splash")) {
         init = false;
@@ -42,7 +50,7 @@
       }
     });
 
-    powerpala("initialize")();
+    preload("powerpala.initialize")();
 
     if (await window.electron.isMacos()) document.body.classList.add("macos");
   })();

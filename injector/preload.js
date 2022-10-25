@@ -28,7 +28,7 @@ contextBridge.exposeInMainWorld = (apiKey, apiObject) => {
     ...apiObject,
     _modifier(name, callback){
       if(!apis[name]) return;
-      apis[name].callbacks.push(callback);
+      apis[name].callback = callback;
     },
     _require(module){
       return window.require(module);
