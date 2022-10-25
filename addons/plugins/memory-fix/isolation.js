@@ -44,7 +44,6 @@ class LauncherSlider {
 
   setMinValue(minValue){
     let ratio = (minValue - this.min) / (this.max - this.min);
-    console.log(ratio, minValue, this.min, this.max);
     this.touchLeft.style.left = Math.ceil(ratio * (this.slider.offsetWidth - (this.touchLeft.offsetWidth + this.normalizeFact))) + 'px';
     this.lineSpan.style.marginLeft = this.touchLeft.offsetLeft + 'px';
     this.lineSpan.style.width = (this.touchRight.offsetLeft - this.touchLeft.offsetLeft) + 'px';
@@ -52,7 +51,6 @@ class LauncherSlider {
 
   setMaxValue(maxValue){
     var ratio = (maxValue - this.min) / (this.max - this.min);
-    console.log(ratio, maxValue, this.min, this.max);
     this.touchRight.style.left = Math.ceil(ratio * (this.slider.offsetWidth - (this.touchLeft.offsetWidth + this.normalizeFact)) + this.normalizeFact) + 'px';
     this.lineSpan.style.marginLeft = this.touchLeft.offsetLeft + 'px';
     this.lineSpan.style.width = (this.touchRight.offsetLeft - this.touchLeft.offsetLeft) + 'px';
@@ -124,10 +122,15 @@ class LauncherSlider {
 
     if(this.step != 0.0){
       let multi = Math.floor(minValue / this.step);
-      this.minValue = this.step * multi;
+      minValue = this.step * multi;
 
       multi = Math.floor(maxValue / this.step);
-      this.maxValue = this.step * multi;
+      maxValue = this.step * multi;
+
+      if(minValue !== maxValue){
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+      }
     }
 
     this.onChange && this.onChange(this.minValue, this.maxValue);
@@ -136,7 +139,7 @@ class LauncherSlider {
 
 let firstTime = true;
 
-onWeakMapSet((key, value) => {
+onWeakMapSet((key) => {
   if("name" in key && key.name === "DoubleSliderComponent" && firstTime){
     firstTime = false;
     key.mounted = function mounted(){

@@ -13,7 +13,7 @@ async function getPaladiumAppPath(){
 
     return join(paladiumPath, 'resources', 'app');
   } else if(process.platform == "darwin"){
-    const paladiumPath = join('/Applications', `Paladium Launcher.app`);
+    const paladiumPath = join('/Applications', `paladium-group.app`);
 
     if(!(await existAndPermissions(paladiumPath))){
       console.error("L'injecteur n'arrive pas à trouver le dossier du Paladium Launcher");
