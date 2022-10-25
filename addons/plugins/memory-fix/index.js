@@ -39,7 +39,7 @@ module.exports = class MemoryFix extends Plugin {
       }
     });
 
-    await powerpala.executeInIsolation(this.getURL("isolation.js"), true);
+    await powerpala.executeInIsolation(this.getURL("isolation.js"));
   }
 
   async stop(){

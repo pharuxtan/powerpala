@@ -68,7 +68,14 @@ electron.app.once('ready', () => {
       let paladiumAssets = readdirSync(assetsDir);
       let powerpalaAssets = readdirSync(powerpalaAssetsDir)
 
-      let module = readFileSync(join(__dirname, "module.template.js"), "utf8").replace(/\r/g, "").split("//\n");
+      let module = readFileSync(join(__dirname, "module.template.js"), "utf8").replace(/\r/g, "");
+
+      module = module.replace(/{defineComponent}/g, "z")
+                     .replace(/{resolveDynamicComponent}/g, "tn")
+                     .replace(/{createAppAPI}/g, "dc")
+                     .replace(/{app}/g, "e2");
+
+      module = module.split("//\n");
       module[1] = readFileSync(join(assetsDir, paladiumAssets.find(a => a.endsWith(".js"))), "utf8");
 
       let index = `

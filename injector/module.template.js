@@ -3,8 +3,8 @@
 // Get components
 let components = {};
 
-let _defineComponent = z;
-z = function defineComponent(options){
+let _defineComponent = {defineComponent};
+{defineComponent} = function defineComponent(options){
   let component = _defineComponent(options);
   components[component.name] = component;
   return component;
@@ -35,8 +35,8 @@ WeakMap = class WeakMap extends window.WeakMap {
 
 // Replace componentGetter to add powerpala icon component
 
-let _resolveDynamicComponent = tn;
-tn = function resolveDynamicComponent(component){
+let _resolveDynamicComponent = {resolveDynamicComponent};
+{resolveDynamicComponent} = function resolveDynamicComponent(component){
   if(component == "PowerpalaIcon"){
     return {
       name: "PowerpalaIcon",
@@ -96,8 +96,8 @@ tn = function resolveDynamicComponent(component){
 // Replace mount to mount vue later
 let _mount;
 
-let _createAppAPI = dc;
-dc = function createAppAPI(render, hydrate){
+let _createAppAPI = {createAppAPI};
+{createAppAPI} = function createAppAPI(render, hydrate){
   let _createApp2 = _createAppAPI(render, hydrate);
   let secondUse = false;
   return function createApp2(rootComponent, rootProps = null){
@@ -121,12 +121,12 @@ dc = function createAppAPI(render, hydrate){
 
 /* Powerpala Natives Export */
 
-let router = e2.config.globalProperties.$router;
-let store = e2.config.globalProperties.$store;
+let router = {app}.config.globalProperties.$router;
+let store = {app}.config.globalProperties.$store;
 
 // Fix app store not loading properly because of not instant mount
 
-let getNotifs = e2._component.methods.getNotifs.bind({ $store: store });
+let getNotifs = {app}._component.methods.getNotifs.bind({ $store: store });
 getNotifs();
 let notificationsInterval = setInterval(() => {
   getNotifs();
@@ -139,8 +139,8 @@ window.electron.onUserDataFetch(user => {
     store.commit("setSkinUrl", user.skinUrl);
 })
 
-e2._component.beforeMount = () => void 0;
-e2._component.beforeDestroy = () => clearInterval(notificationsInterval);
+{app}._component.beforeMount = () => void 0;
+{app}._component.beforeDestroy = () => clearInterval(notificationsInterval);
 
 // node require declaration
 
@@ -190,7 +190,7 @@ class Powerpala {
   }
 
   app = {
-    context: e2._context,
+    context: {app}._context,
     router,
     store,
     components,
