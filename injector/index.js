@@ -89,19 +89,15 @@ electron.app.once('ready', () => {
         <head>
           <meta charset="utf-8">
           <title>Paladium</title>
-          <script type="module">
-            ${module.join("")}
-          </script>
-          <script type="module">
-            ${readFileSync(join(powerpalaAssetsDir, powerpalaAssets.find(a => a.endsWith(".js"))), "utf8")}
-          </script>
+          <script type="module">${module.join("")}</script>
+          <script type="module" src="powerpala://renderer/app/assets/${powerpalaAssets.find(a => a.endsWith(".js"))}"></script>
           <style>
             @font-face {
               font-family: "Inter";
               src: url("powerpala://assets/fonts/Inter.ttf") format("truetype");
             }
           </style>
-          <link rel="stylesheet" href="${join(powerpalaAssetsDir, powerpalaAssets.find(a => a.endsWith(".css")))}">
+          <link rel="stylesheet" href="powerpala://renderer/app/assets/${powerpalaAssets.find(a => a.endsWith(".css"))}">
           <link rel="stylesheet" href="./assets/${paladiumAssets.find(a => a.endsWith(".css"))}">
         </head>
         <body>
