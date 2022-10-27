@@ -33,7 +33,7 @@ WeakMap = class WeakMap extends window.WeakMap {
   }
 }
 
-// Replace componentGetter to add powerpala icon component
+// Replace resolveDynamicComponent to add powerpala icon component
 
 let _resolveDynamicComponent = {resolveDynamicComponent};
 {resolveDynamicComponent} = function resolveDynamicComponent(component){
@@ -93,7 +93,7 @@ let _resolveDynamicComponent = {resolveDynamicComponent};
   return _resolveDynamicComponent(component);
 }
 
-// Replace mount to mount vue later
+// Replace mount by an empty function to mount vue later
 let _mount;
 
 let _createAppAPI = {createAppAPI};

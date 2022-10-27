@@ -3,6 +3,7 @@ const electron = require('electron');
 const { getType } = require('mime');
 const { parse } = require('url');
 const { readdirSync, readFileSync } = require('fs');
+const moduleTraverser = require("./module.traverser.js");
 const Module = require('module');
 
 const paladiumPath = join(dirname(require.main.filename), '..', 'pala.asar');
@@ -70,13 +71,17 @@ electron.app.once('ready', () => {
 
       let module = readFileSync(join(__dirname, "module.template.js"), "utf8").replace(/\r/g, "");
 
-      module = module.replace(/{defineComponent}/g, "z")
-                     .replace(/{resolveDynamicComponent}/g, "tn")
-                     .replace(/{createAppAPI}/g, "dc")
-                     .replace(/{app}/g, "e2");
+      let palaModule = readFileSync(join(assetsDir, paladiumAssets.find(a => a.endsWith(".js"))), "utf8");
+
+      let maps = moduleTraverser(palaModule);
+
+      module = module.replace(/{defineComponent}/g, maps.defineComponent)
+                     .replace(/{resolveDynamicComponent}/g, maps.resolveDynamicComponent)
+                     .replace(/{createAppAPI}/g, maps.createAppAPI)
+                     .replace(/{app}/g, maps.app);
 
       module = module.split("//\n");
-      module[1] = readFileSync(join(assetsDir, paladiumAssets.find(a => a.endsWith(".js"))), "utf8");
+      module[1] = palaModule;
 
       let index = `
       <!DOCTYPE html>
