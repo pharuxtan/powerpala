@@ -11,6 +11,17 @@ body, #game-page {
   }
 }
 
+// Login page
+
+#empty {
+  background-color: #F7F7F7!important;
+  border-color: #DEDEDE!important;
+
+  #titlebar .button {
+    color: #000!important;
+  }
+}
+
 // Navbar
 
 #main-nav {
