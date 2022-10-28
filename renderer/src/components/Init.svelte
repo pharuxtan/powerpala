@@ -27,7 +27,7 @@
     window.preload = new require("vm").runInThisContext(await fetch("powerpala://renderer/src/powerpala.js").then(res => res.text()));
 
     preload("powerpala.setExecuteInIsolation")(async function(url){
-      return Function(await fetch(url).then(res => res.text()))();
+      return await (async function () {}).constructor(await fetch(url).then(res => res.text()))();
     });
 
     preload("powerpala.on")("initiated", () => {
