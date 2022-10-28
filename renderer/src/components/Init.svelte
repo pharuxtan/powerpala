@@ -82,10 +82,6 @@
     background-color: #12131b !important;
   }
 
-  :global(.settings-modal .tabs-header .tab:nth-last-child(2)){
-    display: none !important;
-  }
-
   :global(div#titlebar.powerpala){
     width: 138px !important;
     right: 0px !important;

@@ -76,8 +76,14 @@ electron.app.once('ready', () => {
       let maps = moduleTraverser(palaModule);
 
       module = module.replace(/{defineComponent}/g, maps.defineComponent)
-                     .replace(/{resolveDynamicComponent}/g, maps.resolveDynamicComponent)
                      .replace(/{createAppAPI}/g, maps.createAppAPI)
+                     .replace(/{openBlock}/g, maps.openBlock)
+                     .replace(/{createElementBlock}/g, maps.createElementBlock)
+                     .replace(/{createBaseVNode}/g, maps.createBaseVNode)
+                     .replace(/{_export_sfc}/g, maps._export_sfc)
+                     .replace(/{NavigationItem}/g, maps.NavigationItem)
+                     .replace(/{NavigationComponent}/g, maps.NavigationComponent)
+                     .replace(/{games}/g, maps.games)
                      .replace(/{app}/g, maps.app);
 
       module = module.split("//\n");

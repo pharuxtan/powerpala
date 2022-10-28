@@ -33,66 +33,6 @@ WeakMap = class WeakMap extends window.WeakMap {
   }
 }
 
-// Replace resolveDynamicComponent to add powerpala icon component
-
-let _resolveDynamicComponent = {resolveDynamicComponent};
-{resolveDynamicComponent} = function resolveDynamicComponent(component){
-  if(component == "PowerpalaIcon"){
-    return {
-      name: "PowerpalaIcon",
-      render(){
-        return {
-          type: "svg",
-          props: {
-            xmlns: "http://www.w3.org/2000/svg",
-            viewBox: "0 0 44 44",
-            width: "37.498",
-            height: "37.498"
-          },
-          children: [{
-            type: "g",
-            props: { transform: "translate(3)" },
-            children: [{
-              type: "path",
-              props: { d: "m0 3 13 13q0-10 9-13z" },
-              children: [],
-              shapeFlag: 17
-            }, {
-              type: "g",
-              props: { transform: "translate(6)" },
-              children: [{
-                type: "path",
-                props: { d: "m13.7883 0c-.5299 0-.9564.4266-.9564.9564l0 2.4309c-1.2371.3071-2.4279.8014-3.5467 1.4745l-1.7136-1.7136c-.5716 2.8518-.5716 2.8518-1.3549 0l-3.1083 3.1083c-.3747.3747-.3747.9803 0 1.3549l1.7136 1.7136c-.6678 1.1155-1.1308 2.3198-1.4346 3.5467l-2.4309 0c-.5299 0-.9564.4266-.9564.9564l0 4.3836c0 .5299.4266.9564.9564.9564l2.391 0c.3071 1.2383.8009 2.427 1.4745 3.5467l-1.7136 1.7136c-.3747.3747-.3747.9803 0 1.3549l3.1083 3.1083c.3747.3747.9803.3747 1.3549 0l1.7136-1.7136c1.1237.6777 2.3093 1.1274 3.5467 1.4346l0 2.4309c0 .5299.4266.9564.9564.9564l4.3836 0c.5298 0 .9564-.4266.9564-.9564l0-2.4309c1.24-.3056 2.4252-.7618 3.5467-1.4346l1.7136 1.7136c.3747.3747.9803.3747 1.3549 0l3.1083-3.1083c.3747-.3747.3747-.9803 0-1.3549l-1.7136-1.7136c.6745-1.1177 1.1666-2.316 1.4745-3.5467l2.4309 0c.5299 0 .9564-.4266.9564-.9564l0-4.3836c0-.5299-.4266-.9564-.9564-.9564l-2.4309 0c-.3053-1.2297-.8077-2.4337-1.4745-3.5467l1.7136-1.7136c.3747-.3747.3747-.9803 0-1.3549l-3.1083-3.1083c-.3747-.3747-.9803-.3747-1.3549 0l-1.7136 1.7136c-1.1198-.6722-2.3144-1.1695-3.5467-1.4745l0-2.4309c0-.5299-.4266-.9564-.9564-.9564l-4.3836 0zm2.0324 9.9626c1.5496-.0411 3.13.4829 4.3437 1.6339 2.4274 2.3019 2.541 6.1404.2391 8.5679-2.2962 2.4214-6.1384 2.5269-8.5679.2391-2.4274-2.3019-2.541-6.1404-.2391-8.5679 1.151-1.2137 2.6745-1.8318 4.2242-1.873z" },
-                children: [],
-                shapeFlag: 17
-              }, {
-                type: "path",
-                props: { d: "m4 13 6 0 0 25-6 0z" },
-                children: [],
-                shapeFlag: 17
-              }, {
-                type: "path",
-                props: { d: "m6 23 4.5 0 0 15-4.5 0z" },
-                children: [],
-                shapeFlag: 17
-              }, {
-                type: "path",
-                props: { d: "m4 38 6.5 0-6.5 5.5z" },
-                children: [],
-                shapeFlag: 17
-              }],
-              shapeFlag: 17
-            }],
-            shapeFlag: 17
-          }],
-          shapeFlag: 17
-        }
-      }
-    }
-  }
-  return _resolveDynamicComponent(component);
-}
-
 // Replace mount by an empty function to mount vue later
 let _mount;
 
@@ -121,10 +61,54 @@ let _createAppAPI = {createAppAPI};
 
 /* Powerpala Natives Export */
 
+// Add PowerpalaIcon component
+
+const PowerpalaIconComponent = {defineComponent}({
+  name: "PowerpalaIcon"
+});
+function PowerpalaIconRenderer(){
+  {openBlock}();
+  return {createElementBlock}("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 44 44",
+    width: "37.498",
+    height: "37.498"
+  }, [
+    {createBaseVNode}("g", {
+      transform: "translate(3)"
+    }, [
+      {createBaseVNode}("path", {
+        d: "m0 3 13 13q0-10 9-13z"
+      }, null, -1),
+      {createBaseVNode}("g", {
+        transform: "translate(6)"
+      }, [
+        {createBaseVNode}("path", {
+          d: "m13.7883 0c-.5299 0-.9564.4266-.9564.9564l0 2.4309c-1.2371.3071-2.4279.8014-3.5467 1.4745l-1.7136-1.7136c-.5716 2.8518-.5716 2.8518-1.3549 0l-3.1083 3.1083c-.3747.3747-.3747.9803 0 1.3549l1.7136 1.7136c-.6678 1.1155-1.1308 2.3198-1.4346 3.5467l-2.4309 0c-.5299 0-.9564.4266-.9564.9564l0 4.3836c0 .5299.4266.9564.9564.9564l2.391 0c.3071 1.2383.8009 2.427 1.4745 3.5467l-1.7136 1.7136c-.3747.3747-.3747.9803 0 1.3549l3.1083 3.1083c.3747.3747.9803.3747 1.3549 0l1.7136-1.7136c1.1237.6777 2.3093 1.1274 3.5467 1.4346l0 2.4309c0 .5299.4266.9564.9564.9564l4.3836 0c.5298 0 .9564-.4266.9564-.9564l0-2.4309c1.24-.3056 2.4252-.7618 3.5467-1.4346l1.7136 1.7136c.3747.3747.9803.3747 1.3549 0l3.1083-3.1083c.3747-.3747.3747-.9803 0-1.3549l-1.7136-1.7136c.6745-1.1177 1.1666-2.316 1.4745-3.5467l2.4309 0c.5299 0 .9564-.4266.9564-.9564l0-4.3836c0-.5299-.4266-.9564-.9564-.9564l-2.4309 0c-.3053-1.2297-.8077-2.4337-1.4745-3.5467l1.7136-1.7136c.3747-.3747.3747-.9803 0-1.3549l-3.1083-3.1083c-.3747-.3747-.9803-.3747-1.3549 0l-1.7136 1.7136c-1.1198-.6722-2.3144-1.1695-3.5467-1.4745l0-2.4309c0-.5299-.4266-.9564-.9564-.9564l-4.3836 0zm2.0324 9.9626c1.5496-.0411 3.13.4829 4.3437 1.6339 2.4274 2.3019 2.541 6.1404.2391 8.5679-2.2962 2.4214-6.1384 2.5269-8.5679.2391-2.4274-2.3019-2.541-6.1404-.2391-8.5679 1.151-1.2137 2.6745-1.8318 4.2242-1.873z"
+        }, null, -1),
+        {createBaseVNode}("path", {
+          d: "m4 13 6 0 0 25-6 0z"
+        }, null, -1),
+        {createBaseVNode}("path", {
+          d: "m6 23 4.5 0 0 15-4.5 0z"
+        }, null, -1),
+        {createBaseVNode}("path", {
+          d: "m4 38 6.5 0-6.5 5.5z"
+        }, null, -1),
+      ], -1),
+    ], -1)
+  ]);
+}
+let PowerpalaIcon = {_export_sfc}(PowerpalaIconComponent, [["render", PowerpalaIconRenderer]]);
+
+{NavigationItem}.components.PowerpalaIcon = PowerpalaIcon;
+
+// Get vue-router & vuex store from vue app
+
 let router = {app}.config.globalProperties.$router;
 let store = {app}.config.globalProperties.$store;
 
-// Fix app store not loading properly because of not instant mount
+// Fix vuex store not loading properly because of delayed mount
 
 let getNotifs = {app}._component.methods.getNotifs.bind({ $store: store });
 getNotifs();
@@ -156,8 +140,8 @@ document.addEventListener("keypress", (event) => {
 
 // Add Powerpala Side Menu
 
-Ts.push({
-  visibility: true,
+const PowerpalaGame = {
+  comparePathParserScore: "powerpala",
   id: "powerpala",
   name: "Powerpala",
   icon: "PowerpalaIcon",
@@ -174,8 +158,26 @@ Ts.push({
       hover: "#000",
       disabled: "#000"
     }
+  },
+  compatibleLinux: true
+};
+
+{games}.push({
+  visibility: false,
+  ...PowerpalaGame
+});
+
+{NavigationComponent}.data = function data(){
+  return {
+    games: [
+      ...{games},
+      {
+        visibility: true,
+        ...PowerpalaGame
+      }
+    ]
   }
-})
+}
 
 // Powerpala Natives declaration
 
@@ -231,25 +233,33 @@ let gameComponents = router.getRoutes()[2].components.default;
 let gameRender = gameComponents.render;
 let gameSetup = gameComponents.setup;
 
-setInterval(() => {
-  if(document.querySelector("#game-page__content .title") && document.querySelector("#game-page__content .title").innerText.toUpperCase() == "POWERPALA"){
-    if(document.querySelector("#game-page").style.display != "none"){
-      window.powerpala.emit("powerpalaComponent", true);
-      document.querySelector("#game-page").style.display = "none";
-    }
-  } else if(document.querySelector("#game-page") && document.querySelector("#game-page").style.display != "flex") {
-    document.querySelector("#game-page").style.display = "flex";
-  }
-}, 20);
-
 gameComponents.render = function render(...args){
-  if(args[2].id != "powerpala" && document.querySelector("#game-page")) {
-    window.powerpala.emit("powerpalaComponent", false);
+  let render = gameRender.call(this, ...args);
+  let gamePage = document.querySelector("#game-page");
+  if(gamePage){
+    if(args[2].id != "powerpala") {
+      window.powerpala.emit("powerpalaComponent", false);
+      function command(){
+        try {
+          if(document.querySelector("#game-page").childNodes[0].classList.contains("translate-content-leave-active")) return setTimeout(command, 0);
+        } catch(e){ return setTimeout(command, 0) }
+        gamePage.style.display = "flex";
+      }
+      setTimeout(command, 1300);
+    } else {
+      function command(){
+        try {
+          if(document.querySelector("#game-page").childNodes[0].classList.contains("translate-content-leave-active")) return setTimeout(command, 0);
+        } catch(e){ return setTimeout(command, 0) }
+        gamePage.style.display = "none";
+        window.powerpala.emit("powerpalaComponent", true);
+      }
+      setTimeout(command, 1300);
+    }
   }
-
-  return gameRender(...args);
+  return render;
 }
 gameComponents.setup = function setup(...args){
   if(!args[0].id) args[0].id = "powerpala";
-  return gameSetup(...args);
+  return gameSetup.call(this, ...args);
 }
