@@ -10,6 +10,37 @@ let _defineComponent = {defineComponent};
   return component;
 }
 
+// Add powerpala page loading
+
+let _resolveTransitionProps = {resolveTransitionProps};
+{resolveTransitionProps} = function resolveTransitionProps(rawProps){
+  let props = _resolveTransitionProps.call(this, rawProps);
+
+  let _onBeforeEnter = props.onBeforeEnter;
+  props.onBeforeEnter = function onBeforeEnter(el){
+    if(el.tagName === "IMG"){
+      const gamePage = document.querySelector("#game-page");
+      if(el.alt === "Powerpala"){
+        window.powerpala.emit("powerpalaComponent", true);
+        gamePage.style.display = "none";
+      } else {
+        gamePage.style.display = "flex";
+      }
+    }
+    return _onBeforeEnter(el);
+  }
+
+  let _onLeave = props.onLeave;
+  props.onLeave = function onLeave(el, done){
+    if(el.tagName === "IMG" && el.alt === "Powerpala"){
+      window.powerpala.emit("powerpalaComponent", false);
+    }
+    return _onLeave(el, done);
+  }
+
+  return props;
+}
+
 // Emit cache data
 
 let weakMapSetFuncs = [];
@@ -103,13 +134,9 @@ let PowerpalaIcon = {_export_sfc}(PowerpalaIconComponent, [["render", PowerpalaI
 
 {NavigationItem}.components.PowerpalaIcon = PowerpalaIcon;
 
-// Get vue-router & vuex store from vue app
-
-let router = {app}.config.globalProperties.$router;
-let store = {app}.config.globalProperties.$store;
-
 // Fix vuex store not loading properly because of delayed mount
 
+let store = {app}.config.globalProperties.$store;
 let getNotifs = {app}._component.methods.getNotifs.bind({ $store: store });
 getNotifs();
 let notificationsInterval = setInterval(() => {
@@ -193,7 +220,7 @@ class Powerpala {
 
   app = {
     context: {app}._context,
-    router,
+    router: {app}.config.globalProperties.$router,
     store,
     components,
     mounted: false,
@@ -226,40 +253,3 @@ class Powerpala {
 }
 
 window.powerpala = new Powerpala();
-
-// Powerpala Page Loading
-
-let gameComponents = router.getRoutes()[2].components.default;
-let gameRender = gameComponents.render;
-let gameSetup = gameComponents.setup;
-
-gameComponents.render = function render(...args){
-  let render = gameRender.call(this, ...args);
-  let gamePage = document.querySelector("#game-page");
-  if(gamePage){
-    if(args[2].id != "powerpala") {
-      window.powerpala.emit("powerpalaComponent", false);
-      function command(){
-        try {
-          if(document.querySelector("#game-page").childNodes[0].classList.contains("translate-content-leave-active")) return setTimeout(command, 0);
-        } catch(e){ return setTimeout(command, 0) }
-        gamePage.style.display = "flex";
-      }
-      setTimeout(command, 1300);
-    } else {
-      function command(){
-        try {
-          if(document.querySelector("#game-page").childNodes[0].classList.contains("translate-content-leave-active")) return setTimeout(command, 0);
-        } catch(e){ return setTimeout(command, 0) }
-        gamePage.style.display = "none";
-        window.powerpala.emit("powerpalaComponent", true);
-      }
-      setTimeout(command, 1300);
-    }
-  }
-  return render;
-}
-gameComponents.setup = function setup(...args){
-  if(!args[0].id) args[0].id = "powerpala";
-  return gameSetup.call(this, ...args);
-}

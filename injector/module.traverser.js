@@ -52,8 +52,24 @@ let defineComponent_pattern = [
     let keys = node.consequent.properties.map(p => p.key.name);
     if(!keys.includes("setup")) return;
     if(!keys.includes("name")) return;
-    return parents.slice(-4)[0].id.name;
+    return parents[1].id.name;
   }]
+];
+
+let resolveTransitionProps_pattern = [
+  "Program",
+  ["FunctionDeclaration", node => node.params.length === 1],
+  "BlockStatement",
+  "ReturnStatement",
+  ["CallExpression", node => node.arguments.length === 2],
+  ["ObjectExpression", (node, parents) => {
+    if(!node.properties.find(prop => prop.key.name === "onBeforeEnter")) return;
+    if(!node.properties.find(prop => prop.key.name === "onBeforeAppear")) return;
+    if(!node.properties.find(prop => prop.key.name === "onEnter")) return;
+    if(!node.properties.find(prop => prop.key.name === "onAppear")) return;
+    if(!node.properties.find(prop => prop.key.name === "onLeave")) return;
+    return parents[1].id.name;
+  }],
 ];
 
 let createAppAPI_pattern = [
@@ -68,7 +84,7 @@ let createAppAPI_pattern = [
     if(node.params.length !== 2) return;
     if(node.params[1].type !== "AssignmentPattern") return;
     if(node.params[1].right.value !== null) return;
-    return parents.slice(-4)[0].id.name;
+    return parents[1].id.name;
   }]
 ];
 
@@ -86,7 +102,7 @@ let openBlock_pattern = [
     if(node.arguments[0].right.type !== "ConditionalExpression") return;
     if(node.arguments[0].right.consequent.value !== null) return;
     if(node.arguments[0].right.alternate.type !== "ArrayExpression") return;
-    return parents.slice(-4)[0].id.name;
+    return parents[1].id.name;
   }]
 ];
 
@@ -99,7 +115,7 @@ let createElementBlock_pattern = [
   ["CallExpression", (node, parents) => {
     if(node.arguments.length !== 7) return;
     if(node.arguments.slice(-1)[0].type !== "UnaryExpression") return;
-    return parents.slice(-5)[0].id.name;
+    return parents[1].id.name;
   }],
 ];
 
@@ -137,7 +153,7 @@ let _export_sfc_pattern = [
     if(node.left.type !== "MemberExpression") return;
     if(node.left.computed) return;
     if(node.left.property.name !== "__vccOpts") return;
-    return parents.slice(-6)[0].id.name;
+    return parents[2].id.name;
   }]
 ];
 
@@ -191,7 +207,7 @@ let createApp_pattern = [
     if(node.object.type !== "CallExpression") return;
     if(node.object.arguments.length !== 0) return;
     if(node.property.name !== "createApp") return;
-    return parents.slice(-7)[0].id.name;
+    return parents[2].id.name;
   }]
 ];
 
@@ -209,6 +225,7 @@ module.exports = function moduleTraverser(source){
   const ast = meriyah.parse(source, {module: true, webcompat: true, impliedStrict: true});
 
   let defineComponent = searchPattern(ast, defineComponent_pattern);
+  let resolveTransitionProps = searchPattern(ast, resolveTransitionProps_pattern);
   let createAppAPI = searchPattern(ast, createAppAPI_pattern);
   let openBlock = searchPattern(ast, openBlock_pattern);
   let createElementBlock = searchPattern(ast, createElementBlock_pattern);
@@ -221,6 +238,7 @@ module.exports = function moduleTraverser(source){
 
   return {
     defineComponent,
+    resolveTransitionProps,
     createAppAPI,
     openBlock,
     createElementBlock,

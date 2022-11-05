@@ -76,6 +76,7 @@ electron.app.once('ready', () => {
       let maps = moduleTraverser(palaModule);
 
       module = module.replace(/{defineComponent}/g, maps.defineComponent)
+                     .replace(/{resolveTransitionProps}/g, maps.resolveTransitionProps)
                      .replace(/{createAppAPI}/g, maps.createAppAPI)
                      .replace(/{openBlock}/g, maps.openBlock)
                      .replace(/{createElementBlock}/g, maps.createElementBlock)
