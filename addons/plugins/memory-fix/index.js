@@ -43,6 +43,6 @@ module.exports = class MemoryFix extends Plugin {
   }
 
   async stop(){
-    this.warning("This plugin need a launcher restart to be fully unload");
+    this.warn("This plugin need a launcher restart to be fully unload");
   }
 }

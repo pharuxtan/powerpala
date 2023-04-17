@@ -95,6 +95,12 @@ class Powerpala {
     this.executeInIsolation = func;
   }
 
+  vue = {};
+
+  setVue(vue){
+    this.vue = vue;
+  }
+
   events = {}
 
   on(name, func){

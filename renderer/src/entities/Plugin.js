@@ -134,7 +134,7 @@ module.exports = class Plugin {
       this.log('Plugin unloaded');
       this._ready = false;
     } catch (e) {
-      this.error('An error occurred during shutting down! It\'s heavily recommended reloading Discord to ensure there are no conflicts.', e);
+      this.error('An error occurred during shutting down! It\'s heavily recommended reloading the launcher to ensure there are no conflicts.', e);
     }
   }
 }

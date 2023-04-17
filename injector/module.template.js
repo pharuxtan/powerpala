@@ -1,3 +1,5 @@
+(function(){ 
+
 /* Powerpala Functions */
 
 // Get components
@@ -208,6 +210,8 @@ const PowerpalaGame = {
 
 // Powerpala Natives declaration
 
+const vue = this;
+
 class Powerpala {
   mount(){
     _mount("#app");
@@ -223,6 +227,7 @@ class Powerpala {
     router: {app}.config.globalProperties.$router,
     store,
     components,
+    vue,
     mounted: false,
 
     apiModifier: window.electron._modifier,
@@ -253,3 +258,5 @@ class Powerpala {
 }
 
 window.powerpala = new Powerpala();
+
+}).call({});

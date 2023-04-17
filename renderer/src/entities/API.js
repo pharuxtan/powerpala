@@ -70,7 +70,7 @@ module.exports = class API {
         this.log('API unloaded.');
       }
     } catch (err) {
-      this.error(`An error occurred while shutting down! It's heavily recommended that you reload Discord to ensure there are no conflicts.`, err);
+      this.error(`An error occurred while shutting down! It's heavily recommended that you reload the launcher to ensure there are no conflicts.`, err);
     } finally {
       this._ready = false;
     }*/

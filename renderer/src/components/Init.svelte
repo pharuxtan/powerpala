@@ -29,6 +29,8 @@
     preload("powerpala.setExecuteInIsolation")(async function(url){
       return await (async function () {}).constructor(await fetch(url).then(res => res.text()))();
     });
+    
+    preload("powerpala.setVue")(powerpala.app.vue);
 
     preload("powerpala.on")("initiated", () => {
       message = "Démarrage des modules...";

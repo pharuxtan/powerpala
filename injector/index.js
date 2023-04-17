@@ -2,9 +2,10 @@ const { join, dirname, normalize, sep, extname } = require('path');
 const electron = require('electron');
 const { getType } = require('mime');
 const { parse } = require('url');
-const { readdirSync, readFileSync } = require('fs');
+const { readdirSync, readFileSync, existsSync } = require('fs');
 const moduleTraverser = require("./module.traverser.js");
 const Module = require('module');
+const { js_beautify } = require('js-beautify');
 
 const paladiumPath = join(dirname(require.main.filename), '..', 'pala.asar');
 const PatchedBrowserWindow = require('./browserwindow');
@@ -66,14 +67,28 @@ electron.app.once('ready', () => {
     if(extension == ".html"){
       let assetsDir = join(paladiumPath, 'renderer', 'assets');
       let powerpalaAssetsDir = join(__dirname, "..", "renderer", "app", "assets");
+      let mappingsDir = join(__dirname, "..", "mappings");
       let paladiumAssets = readdirSync(assetsDir);
-      let powerpalaAssets = readdirSync(powerpalaAssetsDir)
+      let powerpalaAssets = readdirSync(powerpalaAssetsDir);
 
       let module = readFileSync(join(__dirname, "module.template.js"), "utf8").replace(/\r/g, "");
 
-      let palaModule = readFileSync(join(assetsDir, paladiumAssets.find(a => a.endsWith(".js"))), "utf8");
-
+      let palaModule = js_beautify(readFileSync(join(assetsDir, paladiumAssets.find(a => a.endsWith(".js"))), "utf8"));
       let maps = moduleTraverser(palaModule);
+      let mappings = {};
+      if(existsSync(join(mappingsDir, `${paladiumPackage.version}.json`))){
+        mappings = require(join(mappingsDir, `${paladiumPackage.version}.json`));
+      } else {
+        for(let [key, value] of Object.entries(maps)){
+          mappings[value] = key;
+        }
+      }
+
+      palaModule = palaModule.replace(/^function [a-zA-Z_$0-9]+\(/gm, (text) => {
+        let funcName = text.match(/(?<=function )[a-zA-Z_$0-9]+(?=\()/)[0];
+        if(!mappings[funcName]) return text;
+        return `this.${mappings[funcName]} = ${funcName};\n${text}`;
+      });
 
       module = module.replace(/{defineComponent}/g, maps.defineComponent)
                      .replace(/{resolveTransitionProps}/g, maps.resolveTransitionProps)
