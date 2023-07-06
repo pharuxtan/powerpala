@@ -40,7 +40,7 @@ function searchPattern(ast, pattern, ...args){
   return identifier;
 }
 
-let defineComponent_pattern = [
+let old_defineComponent_pattern = [
   "Program",
   "FunctionDeclaration",
   "BlockStatement",
@@ -50,6 +50,28 @@ let defineComponent_pattern = [
     if(node.consequent.type !== "ObjectExpression") return;
     if(node.consequent.properties.length !== 2) return;
     let keys = node.consequent.properties.map(p => p.key.name);
+    if(!keys.includes("setup")) return;
+    if(!keys.includes("name")) return;
+    return parents[1].id.name;
+  }]
+];
+
+let new_defineComponent_pattern = [
+  "Program",
+  ["FunctionDeclaration", node => node.params.length === 2],
+  "BlockStatement",
+  "ReturnStatement",
+  ["ConditionalExpression", (node, parents) => {
+    if(node.test.type !== "CallExpression") return;
+    if(node.consequent.type !== "CallExpression") return;
+    if(node.consequent.callee.type !== "ArrowFunctionExpression") return;
+    if(node.consequent.callee.body.type !== "CallExpression") return;
+    if(node.consequent.callee.body.callee.type !== "Identifier") return;
+    if(node.consequent.callee.body.arguments.length !== 3) return;
+    let keys = [
+      node.consequent.callee.body.arguments[0].properties[0].key.name,
+      node.consequent.callee.body.arguments[2].properties[0].key.name
+    ];
     if(!keys.includes("setup")) return;
     if(!keys.includes("name")) return;
     return parents[1].id.name;
@@ -224,7 +246,7 @@ let app_pattern = [
 module.exports = function moduleTraverser(source){
   const ast = meriyah.parse(source, {module: true, webcompat: true, impliedStrict: true});
 
-  let defineComponent = searchPattern(ast, defineComponent_pattern);
+  let defineComponent = searchPattern(ast, new_defineComponent_pattern) ?? searchPattern(ast, old_defineComponent_pattern);
   let resolveTransitionProps = searchPattern(ast, resolveTransitionProps_pattern);
   let createAppAPI = searchPattern(ast, createAppAPI_pattern);
   let openBlock = searchPattern(ast, openBlock_pattern);
