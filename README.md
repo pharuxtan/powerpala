@@ -1,5 +1,5 @@
-[![SOS Emulator Light](/assets/github/light-logo.svg)](https://github.com/pharuxtan/powerpala#gh-light-mode-only)
-[![SOS Emulator Dark](/assets/github/dark-logo.svg)](https://github.com/pharuxtan/powerpala#gh-dark-mode-only)
+[![Powerpala Light](/assets/github/light-logo.svg)](https://github.com/pharuxtan/powerpala#gh-light-mode-only)
+[![Powerpala Dark](/assets/github/dark-logo.svg)](https://github.com/pharuxtan/powerpala#gh-dark-mode-only)
 
 <p align="center">
   <a rel="LICENSE" href="https://github.com/pharuxtan/powerpala/blob/main/LICENSE">
@@ -11,7 +11,7 @@
 
 # Powerpala
 
-Powerpala est un client de modification pour le paladium launcher, il vous permet d'y installer des plugins et des themes
+Powerpala est un client de modification pour l'ancien paladium launcher disponible en V7, V8 & début V8.5, il vous permet d'y installer des plugins et des themes.
 
 ## Comment l'installer ?
 
