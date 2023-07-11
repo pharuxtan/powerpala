@@ -11,7 +11,7 @@
 
 # Powerpala
 
-Powerpala est un client de modification pour l'ancien paladium launcher disponible en V7, V8 & début V8.5, il vous permet d'y installer des plugins et des themes.
+Powerpala est un client de modification pour l'ancien paladium launcher disponible en V8 & début V8.5, il vous permet d'y installer des plugins et des themes.
 
 ## Comment l'installer ?
 
